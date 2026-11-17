@@ -21,7 +21,7 @@ Newest version first. All entries come from the build sessions. Every version wa
 - Pace: step 1 takes about 1.0s. Each later step is ×0.85 faster, with a floor of 0.45s. Tap the board during a chain to fast-forward ×3.
 - Reduced-motion: no tweens, short pauses.
 
-**v1.6.1 feel pass:** each beat is slower (anticipation 0.38s, action 0.62s, settle 0.32s). The speed-up is gentler: ×0.9 per step, floor 0.5. Moving blocks lift with a shadow, wind up backwards, travel, overshoot and land. Drops hang, then accelerate. Moving and dropping blocks leave ghost echoes that fade over about 0.8s, after the block lands.
+**v1.6.1 feel pass:** each beat is slower (anticipation 0.28s, action 0.46s, settle 0.24s). Speed-up ×0.88 per step, floor 0.45. Moving blocks lift with a shadow, wind up backwards, travel, overshoot and land. Drops hang, then accelerate. Moving and dropping blocks leave ghost echoes that fade over about 0.65s, after the block lands.
 
 **MOTION button** (next to SOUND): the game follows the OS reduced-motion setting by default. The button overrides it, and the choice is saved per device. On Windows with "Animation effects" off, all chain animation was being skipped.
 

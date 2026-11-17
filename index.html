@@ -540,7 +540,7 @@ function emit(ev,d){
    3 SETTLE        squash/bounce, step token + ×N stamp flight + pot punch, then the next step
    Step k of a chain scales every beat by max(floor, decay^(k-1)); tapping the board fast-forwards the rest of the chain. */
 // v1.6.1: slower, weightier beats (user: moves felt snappy/instant)
-const BEAT={antic:380,act:620,settle:320,decay:.9,floor:.5,ff:3,rmAntic:140,rmGap:200};
+const BEAT={antic:280,act:460,settle:240,decay:.88,floor:.45,ff:3,rmAntic:140,rmGap:200};
 // motion: follows the OS reduced-motion setting unless the player overrides it with the MOTION button
 const reduced=()=>{const o=store.get('overprint_motion',null);if(o==='on')return false;if(o==='off')return true;try{return matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){return false}};
 const stepSpeed=k=>Math.max(BEAT.floor,Math.pow(BEAT.decay,Math.max(0,k-1)));
@@ -1066,7 +1066,7 @@ const easeOutBack=p=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(p-1,3)+c1*Ma
 function animU(t){const A=ANIM,settle=A.phase==='settle';return{settle,u:settle?1:clamp01((t-A.t0)/A.dur),su:settle?clamp01((t-A.sT0)/A.sDur):0}}
 function fireItem(it){if(it.bn)R.burst(cx(it.verb==='move'||it.verb==='drop'?it.tc:it.c),cy(it.verb==='move'||it.verb==='drop'?it.tr:it.r),it.verb==='destroy'?it.k:(it.v?it.v.k:'X'),it.bn);if(it.shake)R.shake(it.shake)}
 const moveEase=u=>{if(u<.22){const p=u/.22;return -.12*Math.sin(p*Math.PI)}const p=(u-.22)/.78,c=1.6;return 1+(c+1)*Math.pow(p-1,3)+c*Math.pow(p-1,2)};
-const TRAIL=[],TRAIL_MS=800;
+const TRAIL=[],TRAIL_MS=650;
 function drawTrail(t){
   for(let i=TRAIL.length-1;i>=0;i--){const g=TRAIL[i],a=(t-g.t)/TRAIL_MS;if(a>=1||a<0){TRAIL.splice(i,1);continue}
     const s=cs*(.86-.4*a),o=(cs-s)/2;ctx.save();ctx.globalAlpha=.5*(1-a)*(1-a);ctx.fillStyle=colOf(g.k);
