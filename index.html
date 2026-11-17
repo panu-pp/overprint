@@ -107,7 +107,7 @@ button:focus-visible,.card:focus-visible{outline:3px solid var(--ink-b);outline-
 /* chain ribbon + fly tags */
 #ribbon{position:absolute;left:3cqw;right:3cqw;bottom:0;height:20%;display:flex;flex-direction:column;justify-content:center;gap:.8cqh;pointer-events:none;z-index:2;overflow:hidden}
 #ribbon[hidden]{display:none}
-#potline{font-family:var(--font-display);font-size:4.6cqw;line-height:1.1;color:var(--paper);text-shadow:.5cqw .4cqw 0 var(--ink-r);align-self:flex-start}
+#potline{transform-origin:left center;padding-left:1cqw;font-family:var(--font-display);font-size:4.6cqw;line-height:1.1;color:var(--paper);text-shadow:.5cqw .4cqw 0 var(--ink-r);align-self:flex-start}
 #potline.bump{animation:bump .3s}
 #potline .xm{display:inline-block;margin-left:1.4cqw;padding:0 1.6cqw;font-size:6.4cqw;color:var(--ink-dark);background:var(--tc,var(--ink-b));text-shadow:none;border-radius:2px;box-shadow:.6cqw .5cqw 0 var(--ink-dark);transform:rotate(-3deg)}
 #potline .xm.punch{animation:punch .38s cubic-bezier(.2,1.6,.4,1)}
@@ -538,7 +538,8 @@ function emit(ev,d){
    2 ACTION        s.run() mutates state; blocks are drawn tweening (REC list → ANIM) with a verb effect; highlight held
    3 SETTLE        squash/bounce, step token + ×N stamp flight + pot punch, then the next step
    Step k of a chain scales every beat by max(floor, decay^(k-1)); tapping the board fast-forwards the rest of the chain. */
-const BEAT={antic:340,act:380,settle:300,decay:.85,floor:.45,ff:3,rmAntic:140,rmGap:200};
+// v1.6.1: slower, weightier beats (user: moves felt snappy/instant)
+const BEAT={antic:420,act:760,settle:380,decay:.9,floor:.55,ff:3,rmAntic:140,rmGap:200};
 const reduced=()=>{try{return matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){return false}};
 const stepSpeed=k=>Math.max(BEAT.floor,Math.pow(BEAT.decay,Math.max(0,k-1)));
 const nowMs=()=>performance.now();
@@ -1060,6 +1061,13 @@ const easeIO=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
 const easeOutBack=p=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(p-1,3)+c1*Math.pow(p-1,2)};
 function animU(t){const A=ANIM,settle=A.phase==='settle';return{settle,u:settle?1:clamp01((t-A.t0)/A.dur),su:settle?clamp01((t-A.sT0)/A.sDur):0}}
 function fireItem(it){if(it.bn)R.burst(cx(it.verb==='move'||it.verb==='drop'?it.tc:it.c),cy(it.verb==='move'||it.verb==='drop'?it.tr:it.r),it.verb==='destroy'?it.k:(it.v?it.v.k:'X'),it.bn);if(it.shake)R.shake(it.shake)}
+const moveEase=u=>{if(u<.22){const p=u/.22;return -.12*Math.sin(p*Math.PI)}const p=(u-.22)/.78,c=1.6;return 1+(c+1)*Math.pow(p-1,3)+c*Math.pow(p-1,2)};
+const TRAIL=[],TRAIL_MS=520;
+function drawTrail(t){
+  for(let i=TRAIL.length-1;i>=0;i--){const g=TRAIL[i],a=(t-g.t)/TRAIL_MS;if(a>=1||a<0){TRAIL.splice(i,1);continue}
+    const s=cs*(.86-.4*a),o=(cs-s)/2;ctx.save();ctx.globalAlpha=.42*(1-a)*(1-a);ctx.fillStyle=colOf(g.k);
+    ctx.beginPath();if(ctx.roundRect)ctx.roundRect(g.x+o,g.y+o,s,s,s*.22);else ctx.rect(g.x+o,g.y+o,s,s);ctx.fill();ctx.restore()}
+}
 function drawAnim(t){
   const A=ANIM;if(!A||!G)return;
   const{settle,u:u0,su}=animU(t);
@@ -1068,9 +1076,12 @@ function drawAnim(t){
     const d=it.d||0,u=clamp01((u0-d)/(1-d));
     if(!it.fired&&u>=(it.ev||1)){it.fired=true;fireItem(it)}
     if(it.verb==='move'||it.verb==='drop'){
-      const drop=it.verb==='drop',e=drop?u*u:easeIO(u);
+      // move: lift + small wind-up back, travel, overshoot then land. drop: hang, then accelerate down.
+      const drop=it.verb==='drop',e=drop?(u<.18?-.06*Math.sin(u/.18*Math.PI):Math.pow((u-.18)/.82,2.2)):moveEase(u);
       const px=p=>boardX+(it.fc+(it.tc-it.fc)*p)*cs,py=p=>boardY+(it.fr+(it.tr-it.fr)*p)*cs;
       const x=px(e),y=py(e),col=colOf(it.v.k);
+      // ghost echoes left along the path; they outlive the step and fade on their own
+      if(u>.12&&u<1&&(!it.gT||t-it.gT>28)){it.gT=t;TRAIL.push({x,y,k:it.v.k,t})}
       if(u<1){
         // ink-smear tail behind the block
         const e0=Math.max(0,e-.45);ctx.save();ctx.lineCap='round';ctx.strokeStyle=col;ctx.globalAlpha=.3;ctx.lineWidth=cs*.5;
@@ -1081,7 +1092,10 @@ function drawAnim(t){
       }
       // landing squash (bigger for a drop), anchored on the bottom edge
       const sq=settle?Math.sin(su*Math.PI*3)*(1-su)*(drop?.3:.12):0;
-      ctx.save();const ax=x+cs/2,ay=drop?y+cs:y+cs/2;ctx.translate(ax,ay);ctx.scale(1+sq*.8,1-sq);ctx.translate(-ax,-ay);
+      // lifted while travelling: grows ~12% and casts a shadow, sets down at the end
+      const lift=settle?0:Math.sin(clamp01(u)*Math.PI)*.12;
+      if(lift>.005){ctx.save();ctx.globalAlpha=.22;ctx.fillStyle=PAL.dark;ctx.fillRect(x+cs*(.1+lift),y+cs*(.14+lift*1.4),cs*.86,cs*.86);ctx.restore()}
+      ctx.save();const ax=x+cs/2,ay=drop?y+cs:y+cs/2;ctx.translate(ax,ay);ctx.scale((1+sq*.8)*(1+lift),(1-sq)*(1+lift));ctx.translate(-ax,-ay);
       R.cell(ctx,x,y,cs,it.v.k,{t,seed:it.v.s,highlight:!settle,selected:!settle});ctx.restore();
     }else if(it.verb==='destroy'){
       const x=boardX+it.c*cs,y=boardY+it.r*cs,col=colOf(it.k);
@@ -1168,7 +1182,7 @@ function frame(t){
         else if(pk.fx==='recolor'&&v.k!==G.win.key)R.cell(ctx,x,y,cs,G.win.key,{t,seed:idx+3,ghost:true});
       }
     }
-    drawAnim(t);drawPulse(t);drawAim(t);
+    drawTrail(t);drawAnim(t);drawPulse(t);drawAim(t);
     if(ghostP){ghostP.cells.forEach(([a,b])=>{const r=hover.r+a,c=hover.c+b;R.cell(ctx,boardX+c*cs,boardY+r*cs,cs,has('inkblind')?'X':ghostP.k,{t,seed:ghostP.s+a*7+b,ghost:true,highlight:pv.has(r*N+c)})})}
     if(pk){ // aim preview: affected area, X marks on blocks to destroy, reticle
       ctx.strokeStyle=PAL.R;ctx.lineWidth=2;ctx.strokeRect(boardX-3,boardY-3,bs+6,bs+6);
