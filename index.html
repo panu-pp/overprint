@@ -110,8 +110,8 @@ html.rm #streak.bump,html.rm #streak.warn{animation:none}
 #potline{transform-origin:left center;padding-left:1cqw;font-family:var(--font-display);font-size:4.6cqw;line-height:1.1;color:var(--paper);text-shadow:.5cqw .4cqw 0 var(--ink-r);align-self:flex-start}
 #potline.bump{animation:bump .42s ease-out}
 #potline .xm{display:inline-block;margin-left:1.4cqw;padding:0 1.6cqw;font-size:6.4cqw;color:var(--ink-dark);background:var(--tc,var(--ink-b));text-shadow:none;border-radius:2px;box-shadow:.6cqw .5cqw 0 var(--ink-dark);transform:rotate(-3deg);transform-origin:50% 50%}
-#potline .xm.punch{animation:punch .42s ease-out}
-@keyframes punch{0%{transform:rotate(-3deg) scale(1)}30%{transform:rotate(-3deg) scale(1.28,.8)}60%{transform:rotate(-3deg) scale(.9,1.12)}80%{transform:rotate(-3deg) scale(1.04,.97)}100%{transform:rotate(-3deg) scale(1)}}
+#potline .xm.punch{animation:punch .28s cubic-bezier(.2,.8,.3,1)}
+@keyframes punch{0%{transform:rotate(-3deg) scale(1)}12%{transform:rotate(-5deg) scale(1.42,.72)}35%{transform:rotate(-2deg) scale(.86,1.16)}60%{transform:rotate(-3deg) scale(1.06,.95)}100%{transform:rotate(-3deg) scale(1)}}
 .xfly{position:absolute;z-index:4;font-family:var(--font-display);color:var(--ink-dark);background:var(--tc);padding:.2cqh 1.8cqw;border-radius:2px;pointer-events:none;white-space:nowrap;box-shadow:.7cqw .6cqw 0 var(--ink-dark);transform:translate(-50%,-50%);transition:left .42s cubic-bezier(.5,0,.8,.4),top .42s cubic-bezier(.5,0,.8,.4),transform .42s ease-in,opacity .42s ease-in}
 .cleanov{position:absolute;inset:0;z-index:4;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1cqh;animation:cleanbg 1.6s ease-out forwards}
 .cleanov b{font-family:var(--font-display);font-size:11cqw;line-height:.95;color:var(--paper);text-shadow:1cqw .8cqw 0 var(--ink-r),-.6cqw -.4cqw 0 var(--ink-b);text-align:center;animation:cleanstamp .45s cubic-bezier(.2,1.5,.4,1)}
