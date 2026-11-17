@@ -70,12 +70,22 @@ button:focus-visible,.card:focus-visible{outline:3px solid var(--ink-b);outline-
 #rack{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:1.6cqw;min-height:0}
 .card{position:relative;min-width:0;background:#fffaf0;border:.45cqw solid var(--ink-dark);border-radius:3px;padding:.7cqh 1.6cqw;
   display:flex;flex-direction:column;gap:.3cqh;overflow:hidden;box-shadow:.7cqw .6cqw 0 var(--kc,var(--ink-dark));transition:transform .15s,opacity .15s}
-.card .nm{font-family:var(--font-display);font-size:2.7cqw;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card .ds{font-size:2.35cqw;line-height:1.2;opacity:.85;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card .ft{display:flex;align-items:center;gap:.8cqw;margin-top:auto;min-height:2.8cqw}
-.card .tg{margin-left:auto;font-size:1.9cqw;letter-spacing:.08em;opacity:.6}
-.card .cost{display:flex;gap:.8cqw;align-items:center}
+.card{--is:6.6cqw;justify-content:space-between}
+.card .nm{display:none}
+.rule{display:flex;align-items:center;justify-content:center;gap:.5cqw;min-width:0;flex:1}
+.rule .ico{display:block;width:var(--is);height:var(--is);flex:0 0 auto}
+.rule .ico.ar{width:calc(var(--is)*.42);opacity:.75}
+.rule .ico.al{width:calc(var(--is)*.55)}
+.ic-svg,.ic-img{display:block;width:100%;height:100%;object-fit:contain;overflow:visible}
+.rule .xn{font-family:var(--font-display);font-weight:400;font-size:calc(var(--is)*.5);line-height:1;margin-left:.3cqw;white-space:nowrap}
+.card .ft{display:flex;align-items:center;gap:.8cqw;min-height:2.6cqw}
+.card .lp{display:flex;gap:.6cqw}
+.card .lp i{width:1.8cqw;height:1.8cqw;border:.3cqw solid var(--ink-dark);box-sizing:border-box;transform:rotate(45deg);background:transparent}
+.card .lp i.on{background:var(--ink-dark)}
+.card .tg{font-size:2.4cqw;line-height:1}
+.card .cost{display:flex;gap:.8cqw;align-items:center;margin-left:auto}
 .card .cost i{width:2.6cqw;height:2.6cqw;border-radius:50%;background:var(--c);border:.3cqw solid var(--ink-dark)}
+#rack.r4 .card{--is:5.2cqw;padding:.7cqh 1cqw}
 .card.det{outline:.6cqw solid var(--ink-b)}
 .card.empty{border-style:dashed;opacity:.35;box-shadow:none;align-items:center;justify-content:center;font-size:2.4cqw}
 .card.armed{background:var(--ink-y);box-shadow:.7cqw .6cqw 0 var(--ink-r);transform:translateY(-.5cqh)}
@@ -129,14 +139,16 @@ button:focus-visible,.card:focus-visible{outline:3px solid var(--ink-b);outline-
 .ov h2{font-family:var(--font-display);font-weight:400;font-size:7cqw;margin:0;color:var(--ink-dark);text-shadow:.7cqw .5cqw 0 var(--ink-y)}
 .ov p{margin:0;font-size:3.2cqw;max-width:80cqw}
 #cards{display:flex;flex-direction:column;gap:1.8cqh;width:100%}
-.pick{display:grid;grid-template-columns:auto 1fr;gap:.4cqh 3cqw;align-items:center;text-align:left;background:#fffaf0;
-  border:.6cqw solid var(--ink-dark);border-radius:4px;padding:1.6cqh 3.4cqw;box-shadow:1cqw .8cqw 0 var(--kc,var(--ink-dark));font-family:var(--font-body);color:var(--ink-dark)}
-.pick .ic{grid-row:1/3;width:10cqw;height:10cqw;border-radius:50%;background:var(--kc);display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-display);font-size:4cqw;color:var(--paper)}
-.pick .nm{font-family:var(--font-display);font-size:4cqw}
-.pick .ds{font-size:2.9cqw;line-height:1.3}
+.pick{display:flex;flex-direction:column;gap:.5cqh;align-items:stretch;text-align:left;background:#fffaf0;
+  border:.6cqw solid var(--ink-dark);border-radius:4px;padding:1.1cqh 3cqw;box-shadow:1cqw .8cqw 0 var(--kc,var(--ink-dark));font-family:var(--font-body);color:var(--ink-dark)}
+.pick .rule{--is:12cqw;flex:none;justify-content:flex-start;background:#fffaf0;border-radius:3px;padding:.3cqh 1.4cqw;align-self:flex-start;color:var(--ink-dark)}
+.pick .nm{font-family:var(--font-display);font-size:4cqw;line-height:1.1}
+.pick .nm small{font-size:2.6cqw;opacity:.7;margin-left:1.4cqw}
+.pick .ds{font-size:2.8cqw;line-height:1.25}
+.pick .ds em{font-style:normal;font-weight:700;opacity:.65;font-size:2.3cqw;letter-spacing:.04em;display:block}
 .pick.curse{background:var(--ink-dark);color:var(--paper);--kc:var(--ink-y)}
-.pick.curse .ic{color:var(--ink-dark)}
+.pick.curse .rule{--is:11cqw}
+.curse .ico{display:inline-block;width:3.6cqw;height:3.6cqw;vertical-align:middle}
 .stats{display:grid;grid-template-columns:1fr auto;gap:1cqh 6cqw;font-size:3.4cqw;width:70cqw;text-align:left}
 .stats b{font-family:var(--font-display);font-weight:400;text-align:right}
 .lb{width:100%;max-width:82cqw;display:flex;flex-direction:column;gap:1cqh}
@@ -216,6 +228,7 @@ button:focus-visible,.card:focus-visible{outline:3px solid var(--ink-b);outline-
  </div>
 </div>
 
+<script src="icons.js"></script>
 <script src="riso.js"></script>
 <script src="meta.js"></script>
 <script src="sfx.js"></script>
@@ -363,6 +376,9 @@ const PERKS={
   wetpatch:{name:'Wet Patch',type:'curse',mult:1.5,desc:'Each tray, a random 2×2 is wet: you can\'t place there. A clear touching it: points ×2 and chain +3.'},
   smudge:{name:'Smudge',type:'curse',mult:1.5,desc:'After each tray, 2 random blocks swap ink. Tinted lines need only 4 of one ink.'}
 };
+// icon rule data (trigger/effect icon keys + strength n(lv)) lives in icons.js; attach it to each perk as p.ic
+if(window.ICONS)for(const k in ICONS.rules)if(PERKS[k])PERKS[k].ic=ICONS.rules[k];
+const ruleHtml=(id,lv)=>window.ICONS&&PERKS[id].ic?ICONS.rule(id,lv):'';
 const KEYC=p=>p.type==='curse'?'Y':(p.cost?(p.cost.any?'X':Object.keys(p.cost)[0]):(p.type==='react'?'B':'R'));
 
 /* ---------- state ---------- */
@@ -751,7 +767,8 @@ function pickCard(id,fn,extra){
   b.className='pick'+(p.type==='curse'?' curse':'');b.style.setProperty('--kc',CSSK[KEYC(p)]);
   const tag=p.type==='act'?'AUTO · ARMABLE':p.type==='react'?'AUTO':p.type==='pass'?'PASSIVE':'CURSE +'+Math.round((p.mult-1)*100)+'% SCORE';
   const cost=p.cost?(' · arm '+(p.cost.any?p.cost.any+' any colour':p.cost[Object.keys(p.cost)[0]]+' '+{R:'red',Y:'yellow',B:'blue'}[Object.keys(p.cost)[0]])):'';
-  b.innerHTML='<span class="ic">'+(p.type==='curse'?'☠':p.type==='act'?'⚡':p.type==='react'?'↺':'∞')+'</span><span class="nm">'+p.name+((!extra&&G.rack.includes(id))?' → Lv'+(perkLv(id)+1):'')+'</span><span class="ds">'+((!extra&&G.rack.includes(id))?'UPGRADE — '+upText(id)+'. ':'')+tag+cost+' — '+p.desc+(extra||'')+'</span>';
+  const up=!extra&&G.rack.includes(id);
+  b.innerHTML=ruleHtml(id,up?perkLv(id)+1:perkLv(id))+'<span class="nm">'+p.name+(up?' <small>Lv'+perkLv(id)+' → Lv'+(perkLv(id)+1)+'</small>':'')+(extra||'')+'</span><span class="ds"><em>'+(up?'UPGRADE · ':'')+tag+cost+'</em>'+(up?upText(id)+'. ':'')+p.desc+'</span>';
   b.addEventListener('click',fn);return b;
 }
 function choose(id){
@@ -872,7 +889,7 @@ function ui(){
   // meters
   const m=$('meters');
   m.innerHTML=KEYS.map(k=>'<div class="meter" id="m'+k+'" style="--c:'+CSSK[k]+'"><div class="pips">'+[0,1,2].map(i=>'<span class="pip'+(i<G.charges[k]?' on':'')+'"></span>').join('')+'</div><div class="bar"><i style="width:'+(100*G.prog[k]/6)+'%"></i></div></div>').join('')
-    +'<div id="curses">'+(G.curses.length?'<span class="curse" title="'+G.curses.map(c=>PERKS[c].name).join(', ')+'">☠ '+G.curses.length+' · ×'+(+curseBonus().toFixed(2))+'</span>':'')+'</div>';
+    +'<div id="curses">'+(G.curses.length?'<span class="curse" title="'+G.curses.map(c=>PERKS[c].name).join(', ')+'">'+G.curses.map(c=>window.ICONS&&PERKS[c].ic?ICONS.html(PERKS[c].ic.e,'Y'):'☠').join('')+' ×'+(+curseBonus().toFixed(2))+'</span>':'')+'</div>';
   // rack
   $('frame').classList.toggle('chain',!!G.win);
   const cb=$('chainsBtn');cb.textContent=G.chainsOn?'CHAINS ON':'CHAINS OFF';cb.classList.toggle('off',!G.chainsOn);cb.setAttribute('aria-pressed',G.chainsOn);cb.hidden=true;
@@ -886,13 +903,15 @@ function ui(){
     info.innerHTML=(G.picking?'<b>'+PERKS[G.picking].name+'</b>: '+({tray:'tap a tray piece to rotate it. ',dir:'swipe on the board to tilt. ',move:'drag a block to an empty slot. '}[PERKS[G.picking].target]||'drag on the board, release to fire. '):'<b>CHAIN</b> · ')
       +(G.pumping?'Resolving chain…':'Chain ending…');
   } else info.innerHTML=(G.detail&&PERKS[G.detail])?'<b>'+PERKS[G.detail].name+(perkLv(G.detail)>1?' Lv'+perkLv(G.detail):'')+'</b> · '+PERKS[G.detail].desc+(perkLv(G.detail)>1&&PERKS[G.detail].lvText?' <b>Now: '+PERKS[G.detail].lvText(perkLv(G.detail))+'.</b>':'')+(G.armed.has(G.detail)?' <b>⚡ARMED</b> (tap again to refund)':PERKS[G.detail].cost?(isMaxed(G.detail)?' Max level: always boosted, no arming needed.':' Tap to arm.'+(PERKS[G.detail].cost.any?' Pie pip = 1 charge of any colour.':'')):''):'<b>PERKS '+G.rack.length+'/'+G.slots+'</b>'+(G.curses.length?' · ☠ '+G.curses.map(c=>PERKS[c].name).join(', '):'')+'<br>Clear a line to start a chain. Tap a perk to arm it: pay its cost, its next fire is boosted.';
-  const rack=$('rack');rack.innerHTML='';rack.style.gridTemplateColumns='repeat('+(Math.max(G.slots,G.rack.length)>6?4:3)+',1fr)';
+  const rack=$('rack');rack.innerHTML='';rack.style.gridTemplateColumns='repeat('+(Math.max(G.slots,G.rack.length)>6?4:3)+',1fr)';rack.classList.toggle('r4',Math.max(G.slots,G.rack.length)>6);
   for(let i=0;i<Math.max(G.slots,G.rack.length);i++){
     const id=G.rack[i];const d=document.createElement('div');
     if(!id){d.className='card empty';d.textContent='empty slot';rack.appendChild(d);continue}
     const p=PERKS[id];d.className='card '+p.type;d.dataset.id=id;d.style.setProperty('--kc',CSSK[KEYC(p)]);
     const maxed=p.cost&&isMaxed(id);let cost='';if(p.cost&&!maxed){const{k,n}=costOf(p,0);cost='<div class="cost">'+[...Array(n)].map(()=>'<i style="--c:'+(k==='any'?'conic-gradient(var(--ink-r) 0 33.3%,var(--ink-y) 0 66.6%,var(--ink-b) 0)':CSSK[k])+'"'+(k==='any'?' title="1 charge of any colour"':'')+'></i>').join('')+(n===0?'<span style="font-size:2cqw">free</span>':'')+'</div>'}
-    d.innerHTML='<span class="nm">'+p.name+(perkLv(id)>1?' Lv'+perkLv(id):'')+'</span><span class="ds">'+((typeof p.short==='function'?p.short(perkLv(id)):p.short)||p.desc)+'</span><div class="ft">'+cost+'<span class="tg">'+(maxed?'⚡ALWAYS':G.armed.has(id)?'⚡ARMED':p.type==='pass'?'PASS':'AUTO')+'</span></div>';if(!G.win&&G.detail===id)d.classList.add('det');
+    const lv=perkLv(id),mx=maxLv(id);const pips=(p.type==='react'||p.type==='act'||(p.type==='pass'&&p.maxLv))?'<span class="lp" title="Lv'+lv+'/'+mx+'">'+[...Array(mx)].map((_,j)=>'<i'+(j<lv?' class="on"':'')+'></i>').join('')+'</span>':'';
+    const rl=ruleHtml(id,lv);d.setAttribute('aria-label',p.name+(lv>1?' Lv'+lv:'')+': '+p.desc);
+    d.innerHTML=(rl||'<span class="nm" style="display:block">'+p.name+'</span>')+'<div class="ft">'+pips+cost+((maxed||G.armed.has(id))?'<span class="tg" title="'+(maxed?'always boosted':'armed')+'">⚡</span>':'')+'</div>';if(!G.win&&G.detail===id)d.classList.add('det');
     if(G.armed.has(id))d.classList.add('armed');
     if(p.cost&&!maxed&&!G.win){d.tabIndex=0;d.setAttribute('role','button')}
     if((p.type==='react'||p.type==='act')&&G.fired.has(id)&&p.once&&G.win)d.classList.add('used');

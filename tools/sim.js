@@ -8,7 +8,7 @@ const SRC=process.argv[2],OUT=process.argv[3],RUNS=+(process.argv[4]||30),CAP=+(
 const tmp=path.join(__dirname,'game');fs.mkdirSync(tmp,{recursive:true});
 const html=fs.readFileSync(path.join(SRC,'index.html'),'utf8');const i=html.indexOf("'use strict';")+13;
 fs.writeFileSync(path.join(tmp,'index.html'),html.slice(0,i)+'\nwindow.__E=s=>eval(s);'+html.slice(i));
-for(const f of ['riso.js','meta.js','sfx.js'])fs.copyFileSync(path.join(SRC,f),path.join(tmp,f));
+for(const f of ['icons.js','riso.js','meta.js','sfx.js'])fs.copyFileSync(path.join(SRC,f),path.join(tmp,f));
 
 const vc=new VirtualConsole();vc.on('jsdomError',e=>{if(!/animate/.test(e.message))console.log('JSERR',e.message)});
 JSDOM.fromFile(path.join(tmp,'index.html'),{runScripts:'dangerously',resources:'usable',pretendToBeVisual:false,virtualConsole:vc,
