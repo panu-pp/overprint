@@ -95,7 +95,7 @@
       '.riso-card.b{--card-ink:var(--ink-b);--card-mis:var(--ink-r);color:var(--paper)}' +
       '.riso-card.paper{--card-ink:var(--paper);--card-mis:var(--ink-b)}' +
       '@keyframes riso-card-boil{0%{box-shadow:3px 3px 0 var(--card-mis)}33%{box-shadow:2px 4px 0 var(--card-mis)}66%{box-shadow:4px 2px 0 var(--card-mis)}}' +
-      '@media (prefers-reduced-motion:reduce){.riso-card,.riso-grain::after{animation:none}}';
+      'html.rm .riso-card,html.rm .riso-grain::after{animation:none}';
     document.head.appendChild(st);
   }
 

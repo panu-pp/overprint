@@ -25,7 +25,7 @@ Newest version first. All entries come from the build sessions. Every version wa
 
 **Perk tags and ×N stamps fly into the ×N box:** both start at the card at normal size, then travel to the centre of the ×N box, shrinking and fading as they go. Only the ×N box reacts: a squash-and-stretch bounce around its own centre. Before, the box popped in from 2.1× size and the whole POT line bumped. With reduced motion, tags keep the old float.
 
-**MOTION button** (next to SOUND): the game follows the OS reduced-motion setting by default. The button overrides it, and the choice is saved per device. On Windows with "Animation effects" off, all chain animation was being skipped.
+**MOTION button** (next to SOUND): the game follows the OS reduced-motion setting by default. The button overrides it, and the choice is saved per device. CSS animations (×N box punch, logo, clean sheet, streak, card bob, town) follow the button too, through an `html.rm` class instead of the media query. On Windows with "Animation effects" off, all chain animation was being skipped.
 
 **Fixes:** the POT ×N banner now really hides after a chain (CSS `display:flex` was overriding `hidden`, so it stayed faded over the tray). The POT bump no longer clips the "P" (it now scales from the left edge). Added doctype, charset and viewport so the GitHub Pages build renders in standards mode with a phone-width layout. Added an `?debug` test hook (`window.OP`).
 
