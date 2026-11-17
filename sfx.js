@@ -181,6 +181,12 @@
       tone(130, { t: t, dur: 0.16, gain: 0.55, to: 45, glide: 0.12 });
       noise({ t: t, dur: 0.07, gain: 0.22, ftype: 'lowpass', f: 900, q: 0.7 });
     },
+    // line-clear wipe: one soft tick per block, pitch rising along the sweep
+    tick: function (o) {
+      var n = (o && o.n) || 0;
+      tone(480 * Math.pow(1.07, n), { type: 'triangle', dur: 0.07, gain: 0.05 });
+      noise({ dur: 0.035, gain: 0.05, ftype: 'bandpass', f: 3000, q: 2 });
+    },
     // DESTROY: dry crack-crack, then a wet splat as the ink bursts
     crack: function (o) {
       var sp = (o && o.sp) || 1;
