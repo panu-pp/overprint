@@ -5,6 +5,26 @@ Newest version first. All entries come from the build sessions. Every version wa
 
 ---
 
+## v1.6 — Icon cards + readable chains (2026-11-17, local, not published yet)
+**Perk cards (option B, "rule in icons"):** the card face has no text. It shows trigger icon → effect icon ×N, level pips and cost dots. Tap a card for the full WHEN → text. Level-up picks show the big icon rule, the name and the description.
+- New `icons.js`: trigger and curse icons are SVG placeholders. Perk art comes from `icons/<id>.png` (risograph sheet made with Finifugu Bot / GPT Image, source in `art/gen/`). Reprint and Thrift still use placeholders.
+
+**Chain steps (option B, "full beats + speed-up"):** each step plays anticipation → action → settle.
+- Anticipation: the card lifts, an aim arc runs to the targets, and the targets pulse. The highlight stays on through the action.
+- Action, by verb:
+  - **Move** (Nudge, Slide, Tilt): tween with an ink-smear tail.
+  - **Drop** (Aftershock): fall with streaks and squash.
+  - **Destroy** (Shatter, Bomb, Domino, Pebble, line clear): crack, then splatter.
+  - **Re-ink** (Overink): colour bleed.
+  - **Rotate** (Turn, Reprint): spin.
+  - New sounds: whoosh, thud, crack, splash, click.
+- Pace: step 1 takes about 1.0s. Each later step is ×0.85 faster, with a floor of 0.45s. Tap the board during a chain to fast-forward ×3.
+- Reduced-motion: no tweens, short pauses.
+
+**Fixes:** added doctype, charset and viewport so the GitHub Pages build renders in standards mode with a phone-width layout. Added an `?debug` test hook (`window.OP`).
+
+---
+
 ## v1.5 — Board-mess curses (2026-11-10)
 New rule: every curse messes with the board, adds **+50% score**, and has a **mirror reward** on the system it hurts. Curse bonuses now **add** (3 curses = ×2.5) instead of multiplying. Under the old maths, 4 curses gave ×6.4 for almost no risk.
 

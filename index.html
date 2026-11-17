@@ -1,3 +1,6 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Overprint</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;600;700&display=swap">
@@ -1204,5 +1207,7 @@ function frame(t){
 if(RZ.applyCss){try{RZ.applyCss(document.documentElement)}catch(e){}}
 layout();newRun();$('titleOv').hidden=false;
 requestAnimationFrame(frame);
+// test hook: open with ?debug to poke the run from the console
+if(/[?&]debug\b/.test(location.search))window.OP={get G(){return G},ui,place,PERKS};
 })();
 </script>
