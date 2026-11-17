@@ -62,8 +62,8 @@ button:focus-visible,.card:focus-visible{outline:3px solid var(--ink-b);outline-
 #rackhead{display:flex;align-items:center;gap:2cqw;height:6.4cqh;flex:0 0 auto}
 #rackinfo{flex:1;font-size:2.7cqw;line-height:1.25;min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 #rackinfo b{font-family:var(--font-display);font-weight:400}
-#muteBtn{flex:0 0 auto;font-family:var(--font-display);font-size:2.4cqw;background:transparent;color:var(--ink-dark);border:.4cqw solid var(--ink-dark);border-radius:3px;padding:.3cqh 1.4cqw;opacity:.7}
-#muteBtn.off{text-decoration:line-through;opacity:.4}
+#muteBtn,#motionBtn{flex:0 0 auto;font-family:var(--font-display);font-size:2.4cqw;background:transparent;color:var(--ink-dark);border:.4cqw solid var(--ink-dark);border-radius:3px;padding:.3cqh 1.4cqw;opacity:.7}
+#muteBtn.off,#motionBtn.off{text-decoration:line-through;opacity:.4}
 #endBtn{flex:0 0 auto;font-family:var(--font-display);font-size:2.4cqw;background:transparent;color:var(--ink-dark);border:.4cqw solid var(--ink-dark);border-radius:3px;padding:.3cqh 1.4cqw;opacity:.7}
 #endBtn.arm{background:var(--ink-r);color:var(--paper);border-color:var(--ink-r);opacity:1}
 #endBtn:disabled{opacity:.25}
@@ -185,6 +185,7 @@ button:focus-visible,.card:focus-visible{outline:3px solid var(--ink-b);outline-
     <div id="rackhead">
       <div id="rackinfo"></div>
       <button id="muteBtn" type="button" aria-pressed="false">SOUND</button>
+      <button id="motionBtn" type="button" aria-pressed="true">MOTION</button>
       <button id="endBtn" type="button" aria-label="End run now and bank score">END RUN</button>
       <button id="chainsBtn" type="button" aria-pressed="true">CHAINS ON</button>
       <button id="doneBtn" type="button" hidden>DONE</button>
@@ -540,7 +541,8 @@ function emit(ev,d){
    Step k of a chain scales every beat by max(floor, decay^(k-1)); tapping the board fast-forwards the rest of the chain. */
 // v1.6.1: slower, weightier beats (user: moves felt snappy/instant)
 const BEAT={antic:550,act:1100,settle:480,decay:.9,floor:.65,ff:3,rmAntic:140,rmGap:200};
-const reduced=()=>{try{return matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){return false}};
+// motion: follows the OS reduced-motion setting unless the player overrides it with the MOTION button
+const reduced=()=>{const o=store.get('overprint_motion',null);if(o==='on')return false;if(o==='off')return true;try{return matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){return false}};
 const stepSpeed=k=>Math.max(BEAT.floor,Math.pow(BEAT.decay,Math.max(0,k-1)));
 const nowMs=()=>performance.now();
 let ANIM=null,REC=null,beatT=null;
@@ -651,7 +653,7 @@ function renderPot(punch){if(!G||!G.win)return;const pl=$('potline');
 function multStamp(id,ms){ms=ms||430;
   const m=G.win.mult,run=G;const fr=$('frame'),card=document.querySelector('.card[data-id="'+id+'"]'),pl=$('potline');
   const land=()=>{if(G!==run||!G.win)return;renderPot(true);R.shake(2+Math.min(m,10));S('mult',{n:m})};
-  if(!card||!pl||matchMedia('(prefers-reduced-motion:reduce)').matches){land();return}
+  if(!card||!pl||reduced()){land();return}
   const b=fr.getBoundingClientRect(),a=card.getBoundingClientRect(),t=pl.getBoundingClientRect();
   const f=document.createElement('div');f.className='xfly';f.textContent=fmtX(m);f.style.setProperty('--tc',tierC(m));
   f.style.fontSize=Math.min(13,6+m*.8)+'cqw';f.style.left=(a.left-b.left+a.width/2)+'px';f.style.top=(a.top-b.top)+'px';
@@ -945,6 +947,8 @@ $('endBtn').addEventListener('click',()=>{if(!G||G.over||G.win||G.pumping||!$('l
   if(!endArm){const b=$('endBtn');b.classList.add('arm');b.textContent='TAP TO END';endArm=setTimeout(disarmEnd,3000);return}
   disarmEnd();gameOver()});
 $('muteBtn').addEventListener('click',()=>{if(SX){SX.setMuted(!SX.isMuted())}syncMute()});syncMute();
+function syncMotion(){const b=$('motionBtn'),on=!reduced();b.classList.toggle('off',!on);b.setAttribute('aria-pressed',String(on));b.textContent=on?'MOTION':'MOTION OFF'}
+$('motionBtn').addEventListener('click',()=>{store.set('overprint_motion',reduced()?'on':'off');syncMotion()});syncMotion();
 $('chainsBtn').addEventListener('click',()=>{if(!G)return;G.chainsOn=!G.chainsOn;ui()});
 $('doneBtn').addEventListener('click',()=>{if(G&&G.win&&!G.pumping)closeWindow()});
 

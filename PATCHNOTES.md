@@ -23,6 +23,8 @@ Newest version first. All entries come from the build sessions. Every version wa
 
 **v1.6.1 feel pass:** each beat is slower (anticipation 0.55s, action 1.1s, settle 0.48s). The speed-up is gentler: ×0.9 per step, floor 0.65. Moving blocks lift with a shadow, wind up backwards, travel, overshoot and land. Drops hang, then accelerate. Moving and dropping blocks leave ghost echoes that fade over about 0.95s, after the block lands.
 
+**MOTION button** (next to SOUND): the game follows the OS reduced-motion setting by default. The button overrides it, and the choice is saved per device. On Windows with "Animation effects" off, all chain animation was being skipped.
+
 **Fixes:** the POT ×N banner now really hides after a chain (CSS `display:flex` was overriding `hidden`, so it stayed faded over the tray). The POT bump no longer clips the "P" (it now scales from the left edge). Added doctype, charset and viewport so the GitHub Pages build renders in standards mode with a phone-width layout. Added an `?debug` test hook (`window.OP`).
 
 ---
