@@ -23,7 +23,7 @@ Newest version first. All entries come from the build sessions. Every version wa
 
 **v1.6.1 feel pass:** each beat is slower (anticipation 0.25s, action 0.4s, settle 0.21s). Speed-up ×0.88 per step, floor 0.45. **Line-clear wipe:** blocks break one by one along the line (rows left → right, columns top → bottom), each with a soft tick that rises in pitch. The clear step gets 2.2× action time for the sweep. Moving blocks lift with a shadow, wind up backwards, travel, overshoot and land. Drops hang, then accelerate. Moving and dropping blocks leave ghost echoes that fade over about 0.6s, after the block lands.
 
-**Perk tags fly into the pot:** a step tag ("CRACK", "TOPPLE"…) now travels from the card into the POT number, shrinking to 45%. On landing, POT does a squash-and-stretch bounce. Before, it floated up, grew and faded. With reduced motion it keeps the old float.
+**Perk tags and ×N stamps fly into the ×N box:** both start at the card at normal size, then travel to the centre of the ×N box, shrinking and fading as they go. Only the ×N box reacts: a squash-and-stretch bounce around its own centre. Before, the box popped in from 2.1× size and the whole POT line bumped. With reduced motion, tags keep the old float.
 
 **MOTION button** (next to SOUND): the game follows the OS reduced-motion setting by default. The button overrides it, and the choice is saved per device. On Windows with "Animation effects" off, all chain animation was being skipped.
 

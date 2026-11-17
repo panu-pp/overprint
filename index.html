@@ -109,10 +109,10 @@ button:focus-visible,.card:focus-visible{outline:3px solid var(--ink-b);outline-
 #ribbon[hidden]{display:none}
 #potline{transform-origin:left center;padding-left:1cqw;font-family:var(--font-display);font-size:4.6cqw;line-height:1.1;color:var(--paper);text-shadow:.5cqw .4cqw 0 var(--ink-r);align-self:flex-start}
 #potline.bump{animation:bump .42s ease-out}
-#potline .xm{display:inline-block;margin-left:1.4cqw;padding:0 1.6cqw;font-size:6.4cqw;color:var(--ink-dark);background:var(--tc,var(--ink-b));text-shadow:none;border-radius:2px;box-shadow:.6cqw .5cqw 0 var(--ink-dark);transform:rotate(-3deg)}
-#potline .xm.punch{animation:punch .38s cubic-bezier(.2,1.6,.4,1)}
-@keyframes punch{0%{transform:scale(2.1) rotate(-12deg)}100%{transform:rotate(-3deg)}}
-.xfly{position:absolute;z-index:4;font-family:var(--font-display);color:var(--ink-dark);background:var(--tc);padding:.2cqh 1.8cqw;border-radius:2px;pointer-events:none;white-space:nowrap;box-shadow:.7cqw .6cqw 0 var(--ink-dark);transform:translate(-50%,-50%);transition:left .42s cubic-bezier(.5,0,.8,.4),top .42s cubic-bezier(.5,0,.8,.4),transform .42s ease-in}
+#potline .xm{display:inline-block;margin-left:1.4cqw;padding:0 1.6cqw;font-size:6.4cqw;color:var(--ink-dark);background:var(--tc,var(--ink-b));text-shadow:none;border-radius:2px;box-shadow:.6cqw .5cqw 0 var(--ink-dark);transform:rotate(-3deg);transform-origin:50% 50%}
+#potline .xm.punch{animation:punch .42s ease-out}
+@keyframes punch{0%{transform:rotate(-3deg) scale(1)}30%{transform:rotate(-3deg) scale(1.28,.8)}60%{transform:rotate(-3deg) scale(.9,1.12)}80%{transform:rotate(-3deg) scale(1.04,.97)}100%{transform:rotate(-3deg) scale(1)}}
+.xfly{position:absolute;z-index:4;font-family:var(--font-display);color:var(--ink-dark);background:var(--tc);padding:.2cqh 1.8cqw;border-radius:2px;pointer-events:none;white-space:nowrap;box-shadow:.7cqw .6cqw 0 var(--ink-dark);transform:translate(-50%,-50%);transition:left .42s cubic-bezier(.5,0,.8,.4),top .42s cubic-bezier(.5,0,.8,.4),transform .42s ease-in,opacity .42s ease-in}
 .cleanov{position:absolute;inset:0;z-index:4;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1cqh;animation:cleanbg 1.6s ease-out forwards}
 .cleanov b{font-family:var(--font-display);font-size:11cqw;line-height:.95;color:var(--paper);text-shadow:1cqw .8cqw 0 var(--ink-r),-.6cqw -.4cqw 0 var(--ink-b);text-align:center;animation:cleanstamp .45s cubic-bezier(.2,1.5,.4,1)}
 .cleanov i{font-style:normal;font-family:var(--font-display);font-size:8cqw;color:var(--ink-dark);background:var(--ink-y);padding:0 2.4cqw;box-shadow:.8cqw .6cqw 0 var(--ink-dark);transform:rotate(-4deg);animation:cleanstamp .45s .18s cubic-bezier(.2,1.5,.4,1) backwards}
@@ -126,7 +126,7 @@ button:focus-visible,.card:focus-visible{outline:3px solid var(--ink-b);outline-
 .arrow{flex:0 0 auto;color:var(--paper);font-family:var(--font-display);font-size:3cqw}
 @keyframes stamp{0%{transform:scale(1.8) rotate(-8deg);opacity:0}100%{transform:none;opacity:1}}
 @keyframes bump{0%{transform:scale(1)}30%{transform:scale(1.3,.84)}60%{transform:scale(.92,1.1)}80%{transform:scale(1.04,.97)}100%{transform:scale(1)}}
-.fly{position:absolute;z-index:4;font-family:var(--font-display);font-size:4cqw;color:var(--ink-dark);background:var(--kc);padding:.4cqh 1.6cqw;border-radius:2px;pointer-events:none;white-space:nowrap;box-shadow:.5cqw .4cqw 0 var(--ink-dark);transform:translate(-50%,-50%) scale(1.1);transition:left .48s cubic-bezier(.45,0,.75,.35),top .48s cubic-bezier(.45,0,.75,.35),transform .48s ease-in}
+.fly{position:absolute;z-index:4;font-family:var(--font-display);font-size:4cqw;color:var(--ink-dark);background:var(--kc);padding:.4cqh 1.6cqw;border-radius:2px;pointer-events:none;white-space:nowrap;box-shadow:.5cqw .4cqw 0 var(--ink-dark);transform:translate(-50%,-50%) scale(.9);transition:left .48s cubic-bezier(.45,0,.75,.35),top .48s cubic-bezier(.45,0,.75,.35),transform .48s ease-in,opacity .48s ease-in}
 .fly.up{transform:none;transition:none;animation:fly .9s ease-out forwards}
 @keyframes fly{0%{transform:translate(-50%,0) scale(.6);opacity:0}20%{transform:translate(-50%,-2cqh) scale(1.15);opacity:1}100%{transform:translate(-50%,-14cqh) scale(1);opacity:0}}
 
@@ -662,9 +662,10 @@ function multStamp(id,ms){ms=ms||430;
   if(!card||!pl||reduced()){land();return}
   const b=fr.getBoundingClientRect(),a=card.getBoundingClientRect(),t=pl.getBoundingClientRect();
   const f=document.createElement('div');f.className='xfly';f.textContent=fmtX(m);f.style.setProperty('--tc',tierC(m));
-  f.style.fontSize=Math.min(13,6+m*.8)+'cqw';f.style.left=(a.left-b.left+a.width/2)+'px';f.style.top=(a.top-b.top)+'px';
-  f.style.transitionDuration=(ms/1000)+'s';f.style.transform='translate(-50%,-50%) scale(1.25) rotate(-8deg)';fr.appendChild(f);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.left=(t.right-b.left)+'px';f.style.top=(t.top-b.top+t.height/2)+'px';f.style.transform='translate(-50%,-50%) scale(.55) rotate(-3deg)'}));
+  f.style.fontSize='6.4cqw';f.style.left=(a.left-b.left+a.width/2)+'px';f.style.top=(a.top-b.top)+'px';
+  f.style.transitionDuration=(ms/1000)+'s';f.style.transform='translate(-50%,-50%) scale(.9) rotate(-8deg)';fr.appendChild(f);
+  const xm=pl.querySelector('.xm'),xr=xm&&xm.getBoundingClientRect(),tx=xr&&xr.width?xr.left+xr.width/2:t.right,ty=xr&&xr.width?xr.top+xr.height/2:t.top+t.height/2;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.left=(tx-b.left)+'px';f.style.top=(ty-b.top)+'px';f.style.transform='translate(-50%,-50%) scale(.35) rotate(-3deg)';f.style.opacity='.6'}));
   setTimeout(()=>{f.remove();land()},ms);
 }
 function cleanSheet(){
@@ -679,20 +680,20 @@ function addToken(no,name,tag,k){const box=$('tokens');
   const s=document.createElement('span');s.className='tok';s.style.setProperty('--kc',CSSK[k]||CSSK.X);
   s.innerHTML='<b class="no">'+no+'</b>'+name+(tag?'<em>'+tag+'</em>':'');box.appendChild(s);
   while(box.children.length>15)box.removeChild(box.firstChild);
-  const pl=$('potline');pl.classList.remove('bump');void pl.offsetWidth;pl.classList.add('bump')}
+}
 function flyTag(id,text,k){const card=document.querySelector('.card[data-id="'+id+'"]');const fr=$('frame');if(!card)return;
   const a=card.getBoundingClientRect(),b=fr.getBoundingClientRect();
   const f=document.createElement('div');f.className='fly';f.textContent=text;f.style.setProperty('--kc',CSSK[k]||CSSK.X);
   f.style.left=(a.left-b.left+a.width/2)+'px';f.style.top=(a.top-b.top)+'px';
   // v1.6.2: the tag flies INTO the pot, shrinking, and the pot bounces when it lands (old: floated up, grew, faded)
-  const pl=$('potline'),pt=pl&&(pl.querySelector('.pt')||pl),t=pt&&pt.getBoundingClientRect();
+  const pl=$('potline'),pt=pl&&(pl.querySelector('.xm')||pl),t=pt&&pt.getBoundingClientRect();
   if(!t||!t.width||reduced()){f.classList.add('up');fr.appendChild(f);setTimeout(()=>f.remove(),950);return}
   const ms=Math.round(FLY_MS*(G&&G.win?stepSpeed(G.win.beats||1):1)/((G&&G.ff)||1));
   f.style.transitionDuration=(ms/1000)+'s';fr.appendChild(f);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.left=(t.left-b.left+t.width/2)+'px';f.style.top=(t.top-b.top+t.height/2)+'px';f.style.transform='translate(-50%,-50%) scale(.45)'}));
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.left=(t.left-b.left+t.width/2)+'px';f.style.top=(t.top-b.top+t.height/2)+'px';f.style.transform='translate(-50%,-50%) scale(.3)';f.style.opacity='.5'}));
   setTimeout(()=>{f.remove();bumpPot()},ms)}
 const FLY_MS=480;
-function bumpPot(){const pl=$('potline');if(!pl)return;pl.classList.remove('bump');void pl.offsetWidth;pl.classList.add('bump')}
+function bumpPot(){const x=$('potline')&&$('potline').querySelector('.xm');if(!x)return;x.classList.remove('punch');void x.offsetWidth;x.classList.add('punch')}
 
 /* ---------- clearing ---------- */
 function fullLines(){
