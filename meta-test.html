@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Polyomino Town Test</title>
+<style>
+  :root{
+    --paper:#f3ecdc; --ink-r:#ff4f7b; --ink-y:#ffd23a; --ink-b:#3b6fd4; --ink-dark:#18302f;
+    --font-display:"Arial Black","Helvetica Neue",Impact,sans-serif;
+    --font-body:"Helvetica Neue",Arial,sans-serif;
+  }
+  html,body{margin:0;height:100%;background:#cfc6b4;}
+  body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-family:var(--font-body);}
+  #box{width:min(430px,100vw,calc((100vh - 50px) * 9 / 16));aspect-ratio:9/16;max-height:764px;position:relative;overflow:hidden;background:var(--paper);}
+  .dbg{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+  .dbg button{font-size:12px;padding:6px 8px}
+</style>
+</head>
+<body>
+<div id="box"></div>
+<div class="dbg">
+  <button id="ink">+500 ink</button>
+  <button id="mods">log getRunMods</button>
+  <button id="reset">resetAll</button>
+  <button id="small">360x640</button>
+</div>
+<script src="meta.js"></script>
+<script>
+  var box = document.getElementById('box');
+  var state = MetaTown.load();
+  if (state.ink < 3000 && !state.totalInk) MetaTown.addInk(state, 3000);
+  var unmount;
+  function mountTown(){
+    if (unmount) unmount();
+    unmount = MetaTown.mount(box, state, function(){
+      alert('PLAY RUN\n' + JSON.stringify(MetaTown.getRunMods(state), null, 1));
+    });
+  }
+  mountTown();
+  document.getElementById('ink').onclick = function(){ MetaTown.addInk(state, 500); mountTown(); };
+  document.getElementById('mods').onclick = function(){ console.log(MetaTown.getRunMods(state)); };
+  document.getElementById('reset').onclick = function(){ state = MetaTown.resetAll(); MetaTown.addInk(state, 3000); mountTown(); };
+  document.getElementById('small').onclick = function(){ box.style.width='360px'; box.style.height='640px'; box.style.aspectRatio='auto'; };
+</script>
+</body>
+</html>

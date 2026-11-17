@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overprint SFX Test</title>
+<style>
+  :root { --bg:#f4efe4; --ink:#1d2b53; --pink:#ff48b0; --card:#fffaf0; }
+  body { margin:0; padding:16px; background:var(--bg); color:var(--ink); font:15px/1.4 system-ui, sans-serif; }
+  h1 { font-size:20px; margin:0 0 12px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(130px,1fr)); gap:8px; }
+  button { padding:12px 8px; border:2px solid var(--ink); border-radius:8px; background:var(--card); color:var(--ink); font:inherit; cursor:pointer; }
+  button:active { background:var(--pink); color:#fff; }
+  .row { display:flex; gap:8px; margin:12px 0; flex-wrap:wrap; }
+  .hint { opacity:.7; font-size:13px; }
+</style>
+</head>
+<body>
+<h1>Overprint SFX</h1>
+<div class="row">
+  <button id="mute"></button>
+  <button id="hap"></button>
+  <button id="chain8">chain x8</button>
+</div>
+<p class="hint">Tap any button (first tap unlocks audio).</p>
+<div class="grid" id="grid"></div>
+<script src="sfx.js"></script>
+<script>
+  var tests = [
+    ['pick'], ['place', {size:1}, 'place 1'], ['place', {size:5}, 'place 5'], ['place', {size:9}, 'place 9'],
+    ['invalid'], ['clear', {lines:1}, 'clear 1'], ['clear', {lines:3}, 'clear 3'], ['clear', {lines:5}, 'clear 5'],
+    ['clear', {lines:2, pure:true}, 'clear pure'], ['step', {n:1}, 'step 1'], ['destroy'], ['bomb'], ['charge'],
+    ['chain'], ['payout'], ['payout', {big:true}, 'payout big'], ['levelup'], ['curse'], ['ui'], ['buy'], ['gameover']
+  ];
+  var grid = document.getElementById('grid');
+  tests.forEach(function (t) {
+    var b = document.createElement('button');
+    b.textContent = t[2] || t[0];
+    b.onclick = function () { Sfx.unlock(); setTimeout(function(){ Sfx.play(t[0], t[1]); }, 0); };
+    grid.appendChild(b);
+  });
+  document.getElementById('chain8').onclick = function () {
+    Sfx.unlock();
+    Sfx.play('chain');
+    for (var n = 1; n <= 8; n++) (function (n) {
+      setTimeout(function () { Sfx.play('step', {n:n}); }, 300 + (n - 1) * 450);
+    })(n);
+  };
+  var mute = document.getElementById('mute'), hap = document.getElementById('hap');
+  function label() {
+    mute.textContent = Sfx.isMuted() ? 'Sound: OFF' : 'Sound: ON';
+    hap.textContent = Sfx.hapticsOn() ? 'Haptics: ON' : 'Haptics: OFF';
+  }
+  mute.onclick = function () { Sfx.unlock(); Sfx.setMuted(!Sfx.isMuted()); label(); };
+  hap.onclick = function () { Sfx.setHaptics(!Sfx.hapticsOn()); label(); };
+  label();
+</script>
+</body>
+</html>

@@ -1,0 +1,1228 @@
+{
+ "runs": 60,
+ "cap": 300,
+ "ms": 356975,
+ "results": [
+  {
+   "name": "none",
+   "group": "base",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "shatter Lv1",
+   "group": "solo1",
+   "avgScore": 28136,
+   "medScore": 32071,
+   "avgPlacements": 252.1,
+   "deathRate": 0.4,
+   "scorePerPlace": 108.2,
+   "chainsPerRun": 92.2,
+   "avgMult": 2,
+   "maxMult": 4,
+   "cleanRate": 0.002,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Shatter": 1
+   }
+  },
+  {
+   "name": "reroll Lv1",
+   "group": "solo1",
+   "avgScore": 23900,
+   "medScore": 23505,
+   "avgPlacements": 300,
+   "deathRate": 0,
+   "scorePerPlace": 79.7,
+   "chainsPerRun": 134.6,
+   "avgMult": 1.02,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Reprint": 0.02
+   }
+  },
+  {
+   "name": "bomb Lv1",
+   "group": "solo1",
+   "avgScore": 9796,
+   "medScore": 7331,
+   "avgPlacements": 126.8,
+   "deathRate": 0.93,
+   "scorePerPlace": 67.1,
+   "chainsPerRun": 50.6,
+   "avgMult": 1.05,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Ink Bomb": 0.05
+   }
+  },
+  {
+   "name": "recolor Lv1",
+   "group": "solo1",
+   "avgScore": 14515,
+   "medScore": 13987,
+   "avgPlacements": 104.7,
+   "deathRate": 1,
+   "scorePerPlace": 125.1,
+   "chainsPerRun": 42.8,
+   "avgMult": 2,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Overink": 1
+   }
+  },
+  {
+   "name": "slide Lv1",
+   "group": "solo1",
+   "avgScore": 8914,
+   "medScore": 6414,
+   "avgPlacements": 96.8,
+   "deathRate": 0.97,
+   "scorePerPlace": 82.2,
+   "chainsPerRun": 39.6,
+   "avgMult": 1.42,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Slide": 0.42
+   }
+  },
+  {
+   "name": "golddust Lv1",
+   "group": "solo1",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "domino Lv1",
+   "group": "solo1",
+   "avgScore": 10363,
+   "medScore": 6799,
+   "avgPlacements": 93.8,
+   "deathRate": 0.95,
+   "scorePerPlace": 101.6,
+   "chainsPerRun": 34.5,
+   "avgMult": 2,
+   "maxMult": 4,
+   "cleanRate": 0.001,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "echo Lv1",
+   "group": "solo1",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "prism Lv1",
+   "group": "solo1",
+   "avgScore": 7850,
+   "medScore": 5738,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 65.7,
+   "chainsPerRun": 42.7,
+   "avgMult": 1.04,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Prism": 0.04
+   }
+  },
+  {
+   "name": "spark Lv1",
+   "group": "solo1",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "siphon Lv1",
+   "group": "solo1",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "pebble Lv1",
+   "group": "solo1",
+   "avgScore": 28021,
+   "medScore": 33897,
+   "avgPlacements": 217.1,
+   "deathRate": 0.53,
+   "scorePerPlace": 121.3,
+   "chainsPerRun": 85.9,
+   "avgMult": 2,
+   "maxMult": 4,
+   "cleanRate": 0.001,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Pebble": 1
+   }
+  },
+  {
+   "name": "aftershock Lv1",
+   "group": "solo1",
+   "avgScore": 9086,
+   "medScore": 6043,
+   "avgPlacements": 95.1,
+   "deathRate": 0.98,
+   "scorePerPlace": 83.9,
+   "chainsPerRun": 38.5,
+   "avgMult": 1.42,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Aftershock": 0.42
+   }
+  },
+  {
+   "name": "nudge Lv1",
+   "group": "solo1",
+   "avgScore": 29433,
+   "medScore": 31554,
+   "avgPlacements": 274.7,
+   "deathRate": 0.2,
+   "scorePerPlace": 106.4,
+   "chainsPerRun": 93,
+   "avgMult": 1.96,
+   "maxMult": 4,
+   "cleanRate": 0.004,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Nudge": 0.95
+   }
+  },
+  {
+   "name": "tilt Lv1",
+   "group": "solo1",
+   "avgScore": 10030,
+   "medScore": 7507,
+   "avgPlacements": 123.1,
+   "deathRate": 0.9,
+   "scorePerPlace": 70.7,
+   "chainsPerRun": 50.8,
+   "avgMult": 1.06,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Tilt": 0.06
+   }
+  },
+  {
+   "name": "turn Lv1",
+   "group": "solo1",
+   "avgScore": 13312,
+   "medScore": 12893,
+   "avgPlacements": 174.8,
+   "deathRate": 0.77,
+   "scorePerPlace": 70.3,
+   "chainsPerRun": 76.7,
+   "avgMult": 1.02,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Turn": 0.02
+   }
+  },
+  {
+   "name": "wetink Lv1",
+   "group": "solo1",
+   "avgScore": 7315,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "thrift Lv1",
+   "group": "solo1",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "shatter Lv3",
+   "group": "solo3",
+   "avgScore": 26852,
+   "medScore": 27155,
+   "avgPlacements": 291.6,
+   "deathRate": 0.08,
+   "scorePerPlace": 91.7,
+   "chainsPerRun": 84.8,
+   "avgMult": 2.1,
+   "maxMult": 4,
+   "cleanRate": 0.052,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Shatter": 1
+   }
+  },
+  {
+   "name": "reroll Lv3",
+   "group": "solo3",
+   "avgScore": 23900,
+   "medScore": 23505,
+   "avgPlacements": 300,
+   "deathRate": 0,
+   "scorePerPlace": 79.7,
+   "chainsPerRun": 134.6,
+   "avgMult": 1.02,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Reprint": 0.02
+   }
+  },
+  {
+   "name": "bomb Lv3",
+   "group": "solo3",
+   "avgScore": 9003,
+   "medScore": 7297,
+   "avgPlacements": 125.9,
+   "deathRate": 0.92,
+   "scorePerPlace": 63.7,
+   "chainsPerRun": 48.5,
+   "avgMult": 1.07,
+   "maxMult": 4,
+   "cleanRate": 0.012,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Ink Bomb": 0.05
+   }
+  },
+  {
+   "name": "recolor Lv3",
+   "group": "solo3",
+   "avgScore": 15127,
+   "medScore": 14290,
+   "avgPlacements": 104.7,
+   "deathRate": 1,
+   "scorePerPlace": 129.9,
+   "chainsPerRun": 42.8,
+   "avgMult": 2,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Overink": 1
+   }
+  },
+  {
+   "name": "slide Lv3",
+   "group": "solo3",
+   "avgScore": 13929,
+   "medScore": 11568,
+   "avgPlacements": 135.6,
+   "deathRate": 0.88,
+   "scorePerPlace": 93.1,
+   "chainsPerRun": 56.7,
+   "avgMult": 1.39,
+   "maxMult": 2,
+   "cleanRate": 0.001,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Slide": 0.39
+   }
+  },
+  {
+   "name": "golddust Lv3",
+   "group": "solo3",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "domino Lv3",
+   "group": "solo3",
+   "avgScore": 11311,
+   "medScore": 9822,
+   "avgPlacements": 123,
+   "deathRate": 0.97,
+   "scorePerPlace": 86.7,
+   "chainsPerRun": 38.8,
+   "avgMult": 2.01,
+   "maxMult": 4,
+   "cleanRate": 0.006,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "echo Lv3",
+   "group": "solo3",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "prism Lv3",
+   "group": "solo3",
+   "avgScore": 7850,
+   "medScore": 5738,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 65.7,
+   "chainsPerRun": 42.7,
+   "avgMult": 1.04,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Prism": 0.04
+   }
+  },
+  {
+   "name": "spark Lv3",
+   "group": "solo3",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "siphon Lv3",
+   "group": "solo3",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "pebble Lv3",
+   "group": "solo3",
+   "avgScore": 26965,
+   "medScore": 30325,
+   "avgPlacements": 261.5,
+   "deathRate": 0.23,
+   "scorePerPlace": 100.8,
+   "chainsPerRun": 87,
+   "avgMult": 2.01,
+   "maxMult": 4,
+   "cleanRate": 0.007,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Pebble": 1
+   }
+  },
+  {
+   "name": "aftershock Lv3",
+   "group": "solo3",
+   "avgScore": 16200,
+   "medScore": 16531,
+   "avgPlacements": 161.4,
+   "deathRate": 0.83,
+   "scorePerPlace": 90.8,
+   "chainsPerRun": 68.2,
+   "avgMult": 1.38,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Aftershock": 0.38
+   }
+  },
+  {
+   "name": "nudge Lv3",
+   "group": "solo3",
+   "avgScore": 32371,
+   "medScore": 33467,
+   "avgPlacements": 288.9,
+   "deathRate": 0.07,
+   "scorePerPlace": 110.9,
+   "chainsPerRun": 83.2,
+   "avgMult": 1.96,
+   "maxMult": 4,
+   "cleanRate": 0.035,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Nudge": 0.89
+   }
+  },
+  {
+   "name": "tilt Lv3",
+   "group": "solo3",
+   "avgScore": 11065,
+   "medScore": 8067,
+   "avgPlacements": 129.5,
+   "deathRate": 0.92,
+   "scorePerPlace": 73.4,
+   "chainsPerRun": 53.5,
+   "avgMult": 1.06,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Tilt": 0.06
+   }
+  },
+  {
+   "name": "turn Lv3",
+   "group": "solo3",
+   "avgScore": 13312,
+   "medScore": 12893,
+   "avgPlacements": 174.8,
+   "deathRate": 0.77,
+   "scorePerPlace": 70.3,
+   "chainsPerRun": 76.7,
+   "avgMult": 1.02,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Turn": 0.02
+   }
+  },
+  {
+   "name": "wetink Lv3",
+   "group": "solo3",
+   "avgScore": 7316,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.3,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "thrift Lv3",
+   "group": "solo3",
+   "avgScore": 7313,
+   "medScore": 5242,
+   "avgPlacements": 103.6,
+   "deathRate": 0.97,
+   "scorePerPlace": 61.2,
+   "chainsPerRun": 42.7,
+   "avgMult": 1,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {}
+  },
+  {
+   "name": "MID",
+   "group": "marg",
+   "avgScore": 49074,
+   "medScore": 53776,
+   "avgPlacements": 267.4,
+   "deathRate": 0.22,
+   "scorePerPlace": 178.4,
+   "chainsPerRun": 83.5,
+   "avgMult": 4.04,
+   "maxMult": 8,
+   "cleanRate": 0.015,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 1
+   }
+  },
+  {
+   "name": "MID+reroll",
+   "group": "marg",
+   "avgScore": 55560,
+   "medScore": 55543,
+   "avgPlacements": 300,
+   "deathRate": 0,
+   "scorePerPlace": 185.2,
+   "chainsPerRun": 94.2,
+   "avgMult": 4.04,
+   "maxMult": 8,
+   "cleanRate": 0.015,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 0.99,
+    "Shatter": 0.99,
+    "Reprint": 0
+   }
+  },
+  {
+   "name": "MID+bomb",
+   "group": "marg",
+   "avgScore": 52201,
+   "medScore": 56430,
+   "avgPlacements": 275.2,
+   "deathRate": 0.15,
+   "scorePerPlace": 187.8,
+   "chainsPerRun": 83.8,
+   "avgMult": 4.21,
+   "maxMult": 10,
+   "cleanRate": 0.04,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 0.99,
+    "Ink Bomb": 0.06
+   }
+  },
+  {
+   "name": "MID+recolor",
+   "group": "marg",
+   "avgScore": 62821,
+   "medScore": 67580,
+   "avgPlacements": 274.3,
+   "deathRate": 0.18,
+   "scorePerPlace": 225.4,
+   "chainsPerRun": 85.5,
+   "avgMult": 5.04,
+   "maxMult": 8,
+   "cleanRate": 0.021,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 0.99,
+    "Overink": 0.98
+   }
+  },
+  {
+   "name": "MID+slide",
+   "group": "marg",
+   "avgScore": 54026,
+   "medScore": 60457,
+   "avgPlacements": 265.5,
+   "deathRate": 0.22,
+   "scorePerPlace": 199.3,
+   "chainsPerRun": 83.2,
+   "avgMult": 4.46,
+   "maxMult": 10,
+   "cleanRate": 0.019,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 0.99,
+    "Slide": 0.39
+   }
+  },
+  {
+   "name": "MID+golddust",
+   "group": "marg",
+   "avgScore": 92108,
+   "medScore": 101624,
+   "avgPlacements": 267.4,
+   "deathRate": 0.22,
+   "scorePerPlace": 335,
+   "chainsPerRun": 83.5,
+   "avgMult": 7.64,
+   "maxMult": 17,
+   "cleanRate": 0.015,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 1,
+    "Gold Dust": 0.71
+   }
+  },
+  {
+   "name": "MID+echo",
+   "group": "marg",
+   "avgScore": 49074,
+   "medScore": 53776,
+   "avgPlacements": 267.4,
+   "deathRate": 0.22,
+   "scorePerPlace": 178.4,
+   "chainsPerRun": 83.5,
+   "avgMult": 4.04,
+   "maxMult": 8,
+   "cleanRate": 0.015,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 1
+   }
+  },
+  {
+   "name": "MID+prism",
+   "group": "marg",
+   "avgScore": 49960,
+   "medScore": 55370,
+   "avgPlacements": 267.4,
+   "deathRate": 0.22,
+   "scorePerPlace": 181.9,
+   "chainsPerRun": 83.4,
+   "avgMult": 4.12,
+   "maxMult": 10,
+   "cleanRate": 0.018,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 0.99,
+    "Prism": 0.06
+   }
+  },
+  {
+   "name": "MID+spark",
+   "group": "marg",
+   "avgScore": 141160,
+   "medScore": 155601,
+   "avgPlacements": 267.4,
+   "deathRate": 0.22,
+   "scorePerPlace": 512.4,
+   "chainsPerRun": 83.5,
+   "avgMult": 7.04,
+   "maxMult": 11,
+   "cleanRate": 0.015,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 1,
+    "Spark": 2.99
+   }
+  },
+  {
+   "name": "MID+siphon",
+   "group": "marg",
+   "avgScore": 57474,
+   "medScore": 62817,
+   "avgPlacements": 267.4,
+   "deathRate": 0.22,
+   "scorePerPlace": 209.2,
+   "chainsPerRun": 83.5,
+   "avgMult": 4.75,
+   "maxMult": 9,
+   "cleanRate": 0.015,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 1,
+    "Siphon": 0.7
+   }
+  },
+  {
+   "name": "MID+aftershock",
+   "group": "marg",
+   "avgScore": 50147,
+   "medScore": 58579,
+   "avgPlacements": 251.9,
+   "deathRate": 0.27,
+   "scorePerPlace": 194.8,
+   "chainsPerRun": 78.9,
+   "avgMult": 4.46,
+   "maxMult": 10,
+   "cleanRate": 0.017,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Aftershock": 0.4,
+    "Shatter": 0.99
+   }
+  },
+  {
+   "name": "MID+nudge",
+   "group": "marg",
+   "avgScore": 61875,
+   "medScore": 63598,
+   "avgPlacements": 290.1,
+   "deathRate": 0.05,
+   "scorePerPlace": 212.1,
+   "chainsPerRun": 84,
+   "avgMult": 5.01,
+   "maxMult": 10,
+   "cleanRate": 0.087,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 0.99,
+    "Shatter": 0.97,
+    "Nudge": 0.74
+   }
+  },
+  {
+   "name": "MID+tilt",
+   "group": "marg",
+   "avgScore": 54465,
+   "medScore": 56704,
+   "avgPlacements": 282,
+   "deathRate": 0.1,
+   "scorePerPlace": 188.9,
+   "chainsPerRun": 88,
+   "avgMult": 4.14,
+   "maxMult": 10,
+   "cleanRate": 0.028,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 0.99,
+    "Tilt": 0.05
+   }
+  },
+  {
+   "name": "MID+turn",
+   "group": "marg",
+   "avgScore": 51649,
+   "medScore": 54276,
+   "avgPlacements": 280.4,
+   "deathRate": 0.17,
+   "scorePerPlace": 182.1,
+   "chainsPerRun": 88.4,
+   "avgMult": 4.04,
+   "maxMult": 8,
+   "cleanRate": 0.016,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 0.99,
+    "Turn": 0
+   }
+  },
+  {
+   "name": "MID+wetink",
+   "group": "marg",
+   "avgScore": 75066,
+   "medScore": 81747,
+   "avgPlacements": 267.4,
+   "deathRate": 0.22,
+   "scorePerPlace": 270.6,
+   "chainsPerRun": 83.5,
+   "avgMult": 6.02,
+   "maxMult": 18,
+   "cleanRate": 0.015,
+   "avgWetIn": 1.93,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 1
+   }
+  },
+  {
+   "name": "MID+thrift",
+   "group": "marg",
+   "avgScore": 49739,
+   "medScore": 52538,
+   "avgPlacements": 283.5,
+   "deathRate": 0.1,
+   "scorePerPlace": 173.4,
+   "chainsPerRun": 82.1,
+   "avgMult": 4.15,
+   "maxMult": 8,
+   "cleanRate": 0.043,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Shatter": 0.99
+   }
+  },
+  {
+   "name": "early none",
+   "group": "curse_early",
+   "avgScore": 10363,
+   "medScore": 6799,
+   "avgPlacements": 93.8,
+   "deathRate": 0.95,
+   "scorePerPlace": 101.6,
+   "chainsPerRun": 34.5,
+   "avgMult": 2,
+   "maxMult": 4,
+   "cleanRate": 0.001,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "early +narrow",
+   "group": "curse_early",
+   "avgScore": 13579,
+   "medScore": 10414,
+   "avgPlacements": 77.6,
+   "deathRate": 0.98,
+   "scorePerPlace": 157.7,
+   "chainsPerRun": 30.5,
+   "avgMult": 2,
+   "maxMult": 4,
+   "cleanRate": 0.003,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "early +overclock",
+   "group": "curse_early",
+   "avgScore": 15372,
+   "medScore": 10094,
+   "avgPlacements": 93.8,
+   "deathRate": 0.95,
+   "scorePerPlace": 150.5,
+   "chainsPerRun": 34.5,
+   "avgMult": 3,
+   "maxMult": 6,
+   "cleanRate": 0.001,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "early +rubble",
+   "group": "curse_early",
+   "avgScore": 9441,
+   "medScore": 6873,
+   "avgPlacements": 55.3,
+   "deathRate": 1,
+   "scorePerPlace": 143.5,
+   "chainsPerRun": 20.1,
+   "avgMult": 2,
+   "maxMult": 4,
+   "cleanRate": 0.002,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "early +heavy",
+   "group": "curse_early",
+   "avgScore": 8511,
+   "medScore": 6539,
+   "avgPlacements": 53.4,
+   "deathRate": 1,
+   "scorePerPlace": 140,
+   "chainsPerRun": 19.6,
+   "avgMult": 2,
+   "maxMult": 4,
+   "cleanRate": 0.002,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "early +blind",
+   "group": "curse_early",
+   "avgScore": 8886,
+   "medScore": 7033,
+   "avgPlacements": 65.7,
+   "deathRate": 1,
+   "scorePerPlace": 123.3,
+   "chainsPerRun": 23.2,
+   "avgMult": 2,
+   "maxMult": 2,
+   "cleanRate": 0,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "early +inkblind",
+   "group": "curse_early",
+   "avgScore": 15570,
+   "medScore": 10211,
+   "avgPlacements": 93.8,
+   "deathRate": 0.95,
+   "scorePerPlace": 152.6,
+   "chainsPerRun": 34.5,
+   "avgMult": 2,
+   "maxMult": 4,
+   "cleanRate": 0.001,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "early +fuse",
+   "group": "curse_early",
+   "avgScore": 15570,
+   "medScore": 10211,
+   "avgPlacements": 93.8,
+   "deathRate": 0.95,
+   "scorePerPlace": 152.6,
+   "chainsPerRun": 34.5,
+   "avgMult": 2,
+   "maxMult": 4,
+   "cleanRate": 0.001,
+   "avgWetIn": 0,
+   "firesPerChain": {
+    "Domino": 1
+   }
+  },
+  {
+   "name": "late none",
+   "group": "curse_late",
+   "avgScore": 333696,
+   "medScore": 324830,
+   "avgPlacements": 299.3,
+   "deathRate": 0.02,
+   "scorePerPlace": 1115.1,
+   "chainsPerRun": 75.2,
+   "avgMult": 29.96,
+   "maxMult": 91,
+   "cleanRate": 0.333,
+   "avgWetIn": 4.42,
+   "firesPerChain": {
+    "Domino": 0.99,
+    "Pebble": 0.95,
+    "Shatter": 0.85,
+    "Nudge": 0.48,
+    "Gold Dust": 0.74
+   }
+  },
+  {
+   "name": "late +narrow",
+   "group": "curse_late",
+   "avgScore": 556220,
+   "medScore": 553412,
+   "avgPlacements": 296.6,
+   "deathRate": 0.02,
+   "scorePerPlace": 1882.4,
+   "chainsPerRun": 80.7,
+   "avgMult": 31.93,
+   "maxMult": 91,
+   "cleanRate": 0.41,
+   "avgWetIn": 5.07,
+   "firesPerChain": {
+    "Domino": 0.99,
+    "Pebble": 0.92,
+    "Shatter": 0.81,
+    "Nudge": 0.4,
+    "Gold Dust": 0.69
+   }
+  },
+  {
+   "name": "late +overclock",
+   "group": "curse_late",
+   "avgScore": 370507,
+   "medScore": 364301,
+   "avgPlacements": 300,
+   "deathRate": 0,
+   "scorePerPlace": 1235,
+   "chainsPerRun": 75.9,
+   "avgMult": 33.23,
+   "maxMult": 97,
+   "cleanRate": 0.321,
+   "avgWetIn": 4.54,
+   "firesPerChain": {
+    "Domino": 0.99,
+    "Pebble": 0.95,
+    "Shatter": 0.85,
+    "Nudge": 0.5,
+    "Gold Dust": 0.73
+   }
+  },
+  {
+   "name": "late +rubble",
+   "group": "curse_late",
+   "avgScore": 477791,
+   "medScore": 486319,
+   "avgPlacements": 288.2,
+   "deathRate": 0.07,
+   "scorePerPlace": 1632.2,
+   "chainsPerRun": 74.4,
+   "avgMult": 28.43,
+   "maxMult": 91,
+   "cleanRate": 0.271,
+   "avgWetIn": 4.41,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 0.96,
+    "Shatter": 0.89,
+    "Nudge": 0.54,
+    "Gold Dust": 0.72
+   }
+  },
+  {
+   "name": "late +heavy",
+   "group": "curse_late",
+   "avgScore": 528768,
+   "medScore": 526440,
+   "avgPlacements": 298.2,
+   "deathRate": 0.02,
+   "scorePerPlace": 1772.1,
+   "chainsPerRun": 80,
+   "avgMult": 30.62,
+   "maxMult": 91,
+   "cleanRate": 0.311,
+   "avgWetIn": 4.9,
+   "firesPerChain": {
+    "Domino": 0.99,
+    "Pebble": 0.95,
+    "Shatter": 0.87,
+    "Gold Dust": 0.73,
+    "Nudge": 0.5
+   }
+  },
+  {
+   "name": "late +blind",
+   "group": "curse_late",
+   "avgScore": 334055,
+   "medScore": 333228,
+   "avgPlacements": 297.7,
+   "deathRate": 0.02,
+   "scorePerPlace": 1120.2,
+   "chainsPerRun": 73.2,
+   "avgMult": 20.68,
+   "maxMult": 85,
+   "cleanRate": 0.257,
+   "avgWetIn": 1.9,
+   "firesPerChain": {
+    "Domino": 0.99,
+    "Pebble": 0.96,
+    "Shatter": 0.89,
+    "Nudge": 0.55,
+    "Gold Dust": 0.75
+   }
+  },
+  {
+   "name": "late +inkblind",
+   "group": "curse_late",
+   "avgScore": 500600,
+   "medScore": 487304,
+   "avgPlacements": 299.3,
+   "deathRate": 0.02,
+   "scorePerPlace": 1672.8,
+   "chainsPerRun": 75.2,
+   "avgMult": 29.96,
+   "maxMult": 91,
+   "cleanRate": 0.333,
+   "avgWetIn": 4.42,
+   "firesPerChain": {
+    "Domino": 0.99,
+    "Pebble": 0.95,
+    "Shatter": 0.85,
+    "Nudge": 0.48,
+    "Gold Dust": 0.74
+   }
+  },
+  {
+   "name": "late +fuse",
+   "group": "curse_late",
+   "avgScore": 87239,
+   "medScore": 97414,
+   "avgPlacements": 241.7,
+   "deathRate": 0.38,
+   "scorePerPlace": 350,
+   "chainsPerRun": 74.6,
+   "avgMult": 5.06,
+   "maxMult": 41.8,
+   "cleanRate": 0.011,
+   "avgWetIn": 1.98,
+   "firesPerChain": {
+    "Domino": 1,
+    "Pebble": 1,
+    "Gold Dust": 0
+   }
+  }
+ ]
+}
