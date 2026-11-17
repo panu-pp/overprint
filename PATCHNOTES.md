@@ -21,7 +21,7 @@ Newest version first. All entries come from the build sessions. Every version wa
 - Pace: step 1 takes about 1.0s. Each later step is ×0.85 faster, with a floor of 0.45s. Tap the board during a chain to fast-forward ×3.
 - Reduced-motion: no tweens, short pauses.
 
-**v1.6.1 feel pass:** each beat is slower (anticipation 0.42s, action 0.76s, settle 0.38s). The speed-up is gentler: ×0.9 per step, floor 0.55. Moving blocks lift with a shadow, wind up backwards, travel, overshoot and land. Drops hang, then accelerate. Moving and dropping blocks leave ghost echoes that fade over about 0.5s, after the block lands.
+**v1.6.1 feel pass:** each beat is slower (anticipation 0.55s, action 1.1s, settle 0.48s). The speed-up is gentler: ×0.9 per step, floor 0.65. Moving blocks lift with a shadow, wind up backwards, travel, overshoot and land. Drops hang, then accelerate. Moving and dropping blocks leave ghost echoes that fade over about 0.95s, after the block lands.
 
 **Fixes:** the POT ×N banner now really hides after a chain (CSS `display:flex` was overriding `hidden`, so it stayed faded over the tray). The POT bump no longer clips the "P" (it now scales from the left edge). Added doctype, charset and viewport so the GitHub Pages build renders in standards mode with a phone-width layout. Added an `?debug` test hook (`window.OP`).
 
