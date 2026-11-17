@@ -609,7 +609,7 @@ function pump(){
       if(s.id&&tag)flyTag(s.id,tag,k);
       // every perk step that does something → chain mult +1 (×1 → ×2 → ×3 …)
       // Spark adds mult only on its first fire each chain; a boosted (⚡) fire adds +2
-      if(G.win&&s.id&&tag&&!(s.id==='spark'&&G.win.sparked)){G.win.mult+=(String(tag)[0]==='⚡'?2:1);multStamp(s.id,rm?undefined:Math.max(140,BEAT.settle*sc()*.9))}
+      if(G.win&&s.id&&tag&&!(s.id==='spark'&&G.win.sparked)){G.win.mult+=(String(tag)[0]==='⚡'?2:1);const ms=rm?undefined:Math.max(140,BEAT.settle*sc()*.9);if(rm)multStamp(s.id,ms);else{const run=G,id=s.id;setTimeout(()=>{if(G===run&&G.win)multStamp(id,ms)},TAG_GAP*sc())}}
       if(G.win&&s.id==='spark'&&tag)G.win.sparked=true;
       // board fully emptied during a chain → CLEAN SHEET: chain mult ×2 (once per chain)
       if(G.win&&!G.win.clean&&boardEmpty()){G.win.clean=true;G.win.mult*=2;cleanSheet()}
@@ -692,7 +692,7 @@ function flyTag(id,text,k){const card=document.querySelector('.card[data-id="'+i
   f.style.transitionDuration=(ms/1000)+'s';fr.appendChild(f);
   requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.left=(t.left-b.left+t.width/2)+'px';f.style.top=(t.top-b.top+t.height/2)+'px';f.style.transform='translate(-50%,-50%) scale(.3)';f.style.opacity='.5'}));
   setTimeout(()=>{f.remove();bumpPot()},ms)}
-const FLY_MS=480;
+const FLY_MS=480,TAG_GAP=160; // x-stamp leaves the card TAG_GAP ms after the step tag so they don't overlap
 function bumpPot(){const x=$('potline')&&$('potline').querySelector('.xm');if(!x)return;x.classList.remove('punch');void x.offsetWidth;x.classList.add('punch')}
 
 /* ---------- clearing ---------- */
