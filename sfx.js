@@ -166,6 +166,47 @@
       pluck(f, 0, 0.28, 0.28);
       bell(f, 0.0, 0.08, 0.35);
     },
+    // ---- chain-step verb sounds (o.sp = time scale: <1 when the chain is sped up) ----
+    // MOVE: paper slide / whoosh
+    whoosh: function (o) {
+      var sp = (o && o.sp) || 1;
+      noise({ dur: 0.26 * sp, gain: 0.2, ftype: 'bandpass', f: 500, to: 3200, q: 1.1, att: 0.07 * sp });
+      tone(260, { type: 'triangle', dur: 0.2 * sp, gain: 0.06, to: 520, att: 0.05 * sp });
+    },
+    // DROP: short falling whistle, then a heavy thud where the block lands
+    thud: function (o) {
+      var sp = (o && o.sp) || 1;
+      noise({ dur: 0.2 * sp, gain: 0.08, ftype: 'bandpass', f: 2400, to: 700, q: 1.5, att: 0.02 });
+      var t = 0.24 * sp;
+      tone(130, { t: t, dur: 0.16, gain: 0.55, to: 45, glide: 0.12 });
+      noise({ t: t, dur: 0.07, gain: 0.22, ftype: 'lowpass', f: 900, q: 0.7 });
+    },
+    // DESTROY: dry crack-crack, then a wet splat as the ink bursts
+    crack: function (o) {
+      var sp = (o && o.sp) || 1;
+      noise({ dur: 0.02, gain: 0.3, ftype: 'highpass', f: 4000 });
+      noise({ t: 0.05 * sp, dur: 0.03, gain: 0.22, ftype: 'bandpass', f: 2600, q: 2 });
+      tone(200, { dur: 0.05, gain: 0.14, type: 'square', to: 90 });
+      var t = 0.15 * sp;
+      noise({ t: t, dur: 0.16, gain: 0.26, ftype: 'bandpass', f: 1400, to: 450, q: 0.9 });
+      tone(110, { t: t, dur: 0.12, gain: 0.3, to: 50 });
+    },
+    // RE-INK: wet splash with a couple of bubbles
+    splash: function (o) {
+      var sp = (o && o.sp) || 1;
+      noise({ dur: 0.3 * sp, gain: 0.2, ftype: 'bandpass', f: 600, to: 2400, q: 3, att: 0.04 * sp });
+      for (var i = 0; i < 3; i++) {
+        var f = 500 + Math.random() * 500;
+        tone(f, { t: (0.05 + i * 0.07) * sp, dur: 0.07, gain: 0.1, to: f * 1.8 });
+      }
+    },
+    // ROTATE: two ratchet clicks
+    click: function (o) {
+      var sp = (o && o.sp) || 1;
+      pluck(1500, 0, 0.14, 0.04);
+      pluck(1150, 0.1 * sp, 0.12, 0.05);
+      noise({ t: 0.1 * sp, dur: 0.02, gain: 0.08, ftype: 'highpass', f: 5000 });
+    },
     destroy: function () {
       for (var i = 0; i < 4; i++) {
         noise({ t: i * 0.025 + Math.random() * 0.01, dur: 0.035, gain: 0.25 - i * 0.04,
@@ -250,6 +291,8 @@
     clear: function (o) { var L = clamp((o && o.lines) || 1, 1, 5); return Math.round(20 + (L - 1) * 3.75); },
     step: function () { return 12; },
     bomb: function () { return 45; },
+    thud: function () { return 14; },
+    crack: function () { return 18; },
     mult: function (o) { return Math.min(40, 14 + ((o && o.n) || 2) * 2); },
     clean: function () { return [50, 30, 80]; },
     gameover: function () { return [60, 40, 90]; }
