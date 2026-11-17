@@ -21,7 +21,9 @@ Newest version first. All entries come from the build sessions. Every version wa
 - Pace: step 1 takes about 1.0s. Each later step is ×0.85 faster, with a floor of 0.45s. Tap the board during a chain to fast-forward ×3.
 - Reduced-motion: no tweens, short pauses.
 
-**v1.6.1 feel pass:** each beat is slower (anticipation 0.2s, action 0.32s, settle 0.17s). Speed-up ×0.88 per step, floor 0.45. **Line-clear wipe:** blocks break one by one along the line (rows left → right, columns top → bottom), each with a soft tick that rises in pitch. The clear step gets 2.2× action time for the sweep. Moving blocks lift with a shadow, wind up backwards, travel, overshoot and land. Drops hang, then accelerate. Moving and dropping blocks leave ghost echoes that fade over about 0.48s, after the block lands.
+**v1.6.1 feel pass:** each beat is slower (anticipation 0.25s, action 0.4s, settle 0.21s). Speed-up ×0.88 per step, floor 0.45. **Line-clear wipe:** blocks break one by one along the line (rows left → right, columns top → bottom), each with a soft tick that rises in pitch. The clear step gets 2.2× action time for the sweep. Moving blocks lift with a shadow, wind up backwards, travel, overshoot and land. Drops hang, then accelerate. Moving and dropping blocks leave ghost echoes that fade over about 0.6s, after the block lands.
+
+**Perk tags fly into the pot:** a step tag ("CRACK", "TOPPLE"…) now travels from the card into the POT number, shrinking to 45%. On landing, POT does a squash-and-stretch bounce. Before, it floated up, grew and faded. With reduced motion it keeps the old float.
 
 **MOTION button** (next to SOUND): the game follows the OS reduced-motion setting by default. The button overrides it, and the choice is saved per device. On Windows with "Animation effects" off, all chain animation was being skipped.
 
