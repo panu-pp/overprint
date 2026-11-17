@@ -106,6 +106,7 @@ button:focus-visible,.card:focus-visible{outline:3px solid var(--ink-b);outline-
 
 /* chain ribbon + fly tags */
 #ribbon{position:absolute;left:3cqw;right:3cqw;bottom:0;height:20%;display:flex;flex-direction:column;justify-content:center;gap:.8cqh;pointer-events:none;z-index:2;overflow:hidden}
+#ribbon[hidden]{display:none}
 #potline{font-family:var(--font-display);font-size:4.6cqw;line-height:1.1;color:var(--paper);text-shadow:.5cqw .4cqw 0 var(--ink-r);align-self:flex-start}
 #potline.bump{animation:bump .3s}
 #potline .xm{display:inline-block;margin-left:1.4cqw;padding:0 1.6cqw;font-size:6.4cqw;color:var(--ink-dark);background:var(--tc,var(--ink-b));text-shadow:none;border-radius:2px;box-shadow:.6cqw .5cqw 0 var(--ink-dark);transform:rotate(-3deg)}
@@ -663,7 +664,7 @@ function cleanSheet(){
   R.shake(14);S('clean');for(let i=0;i<14;i++)R.burst(cx((Math.random()*N)|0),cy((Math.random()*N)|0),KEYS[i%3],5);
   renderPot(true);
 }
-function resetRibbon(show){$('tokens').innerHTML='';$('ribbon').hidden=!show}
+function resetRibbon(show){$('tokens').innerHTML='';if(!show)$('potline').innerHTML='';$('ribbon').hidden=!show}
 function addToken(no,name,tag,k){const box=$('tokens');
   if(box.children.length){const a=document.createElement('span');a.className='arrow';a.textContent='→';box.appendChild(a)}
   const s=document.createElement('span');s.className='tok';s.style.setProperty('--kc',CSSK[k]||CSSK.X);

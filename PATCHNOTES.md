@@ -21,7 +21,7 @@ Newest version first. All entries come from the build sessions. Every version wa
 - Pace: step 1 takes about 1.0s. Each later step is ×0.85 faster, with a floor of 0.45s. Tap the board during a chain to fast-forward ×3.
 - Reduced-motion: no tweens, short pauses.
 
-**Fixes:** added doctype, charset and viewport so the GitHub Pages build renders in standards mode with a phone-width layout. Added an `?debug` test hook (`window.OP`).
+**Fixes:** the POT ×N banner now really hides after a chain (CSS `display:flex` was overriding `hidden`, so it stayed faded over the tray). Added doctype, charset and viewport so the GitHub Pages build renders in standards mode with a phone-width layout. Added an `?debug` test hook (`window.OP`).
 
 ---
 
