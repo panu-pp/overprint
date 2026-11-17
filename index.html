@@ -318,13 +318,13 @@ const PERKS={
   recolor:{name:'Overink',short:lv=>'Chain opens → re-ink '+REINK_NAME[lv-1],lvText:lv=>'re-ink '+REINK_NAME[lv-1],type:'act',on:'open',once:true,cost:{R:1},
     desc:'WHEN a chain opens → re-ink a shape to chain ink where lines are fullest. Size grows per level: + → 3×3 → big ◇. Boost: one size up.',
     pick(){const b=takeBoost('recolor');const sel=bestReink(perkLv('recolor')-1+(b?1:0));sel.boost=b;return sel},
-    run(d,sel){if(!sel||!sel.length)return null;let n=0;sel.forEach(([r,c])=>{const v=cellAt(r,c);if(v&&v.k!=='L'){v.k=G.win.key;n++;R.burst(cx(c),cy(r),G.win.key,3)}});
+    run(d,sel){if(!sel||!sel.length)return null;let n=0;sel.forEach(([r,c])=>{const v=cellAt(r,c);if(v&&v.k!=='L'){const ok=v.k;v.k=G.win.key;n++;if(REC){if(ok!==v.k)REC.push({verb:'reink',v,r,c,from:ok,to:v.k,ev:.15,bn:3})}else R.burst(cx(c),cy(r),G.win.key,3)}});
       emit('recolor',{count:n});return(sel.boost?'⚡':'')+'RE-INK '+n}},
   slide:{name:'Slide',short:lv=>'Column clears → shift '+lv+' ←',lvText:lv=>'shift '+lv+' step'+(lv>1?'s':''),type:'react',on:'clear',once:true,cond:d=>d.cols&&d.cols.length>0,
     desc:'WHEN a column clears → every block right of it shifts left (1 step, +1 per level).',
     pick(d){const c0=Math.min(...d.cols);const l=[];for(let r=0;r<N;r++)for(let c=c0+1;c<N;c++)if(isFree(G.board[r][c]))l.push([r,c]);return l},
-    run(d){const c0=Math.min(...d.cols);let n=0;for(let k=0;k<perkLv('slide');k++)for(let c=c0+1;c<N;c++)for(let r=0;r<N;r++){const v=G.board[r][c];if(isFree(v)&&!G.board[r][c-1]){G.board[r][c-1]=v;G.board[r][c]=null;n++}}
-      if(!n)return null;R.shake(4);S('place',{size:4});return'SLIDE '+'←'.repeat(perkLv('slide'))}},
+    run(d){const c0=Math.min(...d.cols);let n=0;for(let k=0;k<perkLv('slide');k++)for(let c=c0+1;c<N;c++)for(let r=0;r<N;r++){const v=G.board[r][c];if(isFree(v)&&!G.board[r][c-1]){G.board[r][c-1]=v;G.board[r][c]=null;n++;recMove(v,r,c,r,c-1,'move')}}
+      if(!n)return null;shakeLater(4);if(!REC)S('place',{size:4});return'SLIDE '+'←'.repeat(perkLv('slide'))}},
   golddust:{name:'Gold Dust',short:lv=>'Yellow breaks → ×'+(lv+1),lvText:lv=>'chain ×'+(lv+1),type:'react',on:'destroy',once:true,cond:d=>d.keys.includes('Y'),desc:'WHEN a yellow block is destroyed → chain ×2 (×3 at Lv2, ×4 at Lv3).',
     run(){const x=perkLv('golddust')+1;G.win.mult*=x;return'CHAIN ×'+x}},
   domino:{name:'Domino',short:lv=>'Line clears → break '+lv,lvText:lv=>'break '+lv,type:'react',on:'clear',once:true,cond:d=>d.inWindow,desc:'WHEN a line clears → destroy 1 random block (+1 per level).',fx:'destroy',
@@ -348,22 +348,22 @@ const PERKS={
   aftershock:{name:'Aftershock',short:lv=>'Row clears → drop '+lv,lvText:lv=>'drop '+lv+' step'+(lv>1?'s':''),type:'react',on:'clear',once:true,cond:d=>d.rows&&d.rows.length>0,
     desc:'WHEN a row clears → every block above it drops (1 step, +1 per level).',
     pick(d){const r0=Math.max(...d.rows);const l=[];for(let r=0;r<r0;r++)for(let c=0;c<N;c++)if(isFree(G.board[r][c]))l.push([r,c]);return l},
-    run(d){const r0=Math.max(...d.rows);let n=0;for(let k=0;k<perkLv('aftershock');k++)for(let r=r0-1;r>=0;r--)for(let c=0;c<N;c++){const v=G.board[r][c];if(isFree(v)&&!G.board[r+1][c]){G.board[r+1][c]=v;G.board[r][c]=null;n++}}
-      if(!n)return null;R.shake(4);S('place',{size:4});return'DROP '+'↓'.repeat(perkLv('aftershock'))}},
+    run(d){const r0=Math.max(...d.rows);let n=0;for(let k=0;k<perkLv('aftershock');k++)for(let r=r0-1;r>=0;r--)for(let c=0;c<N;c++){const v=G.board[r][c];if(isFree(v)&&!G.board[r+1][c]){G.board[r+1][c]=v;G.board[r][c]=null;n++;recMove(v,r,c,r+1,c,'drop')}}
+      if(!n)return null;shakeLater(4);if(!REC)S('place',{size:4});return'DROP '+'↓'.repeat(perkLv('aftershock'))}},
   nudge:{name:'Nudge',short:lv=>'Chain opens → fill '+(lv>1?lv+' gaps':'a gap'),lvText:lv=>'move '+lv+' block'+(lv>1?'s':''),type:'act',on:'open',once:true,cost:{any:1},
     desc:'WHEN a chain opens → move a loose block into the gap of the fullest line (+1 block per level). Boost: +1 block.',
     pick(){const b=takeBoost('nudge');const moves=planNudges(perkLv('nudge')+(b?1:0));const sel=[];moves.forEach(m=>{sel.push([m.from.r,m.from.c],[m.to.r,m.to.c])});sel.moves=moves;sel.boost=b;return sel},
-    run(d,sel){if(!sel||!sel.moves||!sel.moves.length)return null;sel.moves.forEach(m=>{const v=G.board[m.from.r][m.from.c];if(!v||G.board[m.to.r][m.to.c])return;G.board[m.from.r][m.from.c]=null;G.board[m.to.r][m.to.c]=v;R.burst(cx(m.to.c),cy(m.to.r),v.k,5)});
-      S('place',{size:1});return(sel.boost?'⚡':'')+'MOVE'+(sel.moves.length>1?' ×'+sel.moves.length:'')}},
+    run(d,sel){if(!sel||!sel.moves||!sel.moves.length)return null;sel.moves.forEach(m=>{const v=G.board[m.from.r][m.from.c];if(!v||G.board[m.to.r][m.to.c])return;G.board[m.from.r][m.from.c]=null;G.board[m.to.r][m.to.c]=v;if(REC)recMove(v,m.from.r,m.from.c,m.to.r,m.to.c,'move',5);else R.burst(cx(m.to.c),cy(m.to.r),v.k,5)});
+      if(!REC)S('place',{size:1});return(sel.boost?'⚡':'')+'MOVE'+(sel.moves.length>1?' ×'+sel.moves.length:'')}},
   tilt:{name:'Tilt',short:lv=>'Tinted line → tilt'+(lv>1?' ×'+lv:''),lvText:lv=>'tilt '+lv+'×',type:'act',on:'clear',once:true,cond:d=>d.tint&&d.tint.length>0,cost:{B:1},
     desc:'WHEN a tinted line clears (5+ of its blocks share one ink) → slide all blocks the best way (+1 tilt per level). Boost: +1 tilt.',
     pick(){const x=[];x.boost=planTilt(1).length?takeBoost('tilt'):false;return x},
-    run(d,sel){const dirs=planTilt(perkLv('tilt')+(sel&&sel.boost?1:0));if(!dirs.length)return null;dirs.forEach(dr=>{G.board=tiltBoard(G.board,dr)});R.shake(6);S('bomb');
+    run(d,sel){const dirs=planTilt(perkLv('tilt')+(sel&&sel.boost?1:0));if(!dirs.length)return null;const before=G.board;dirs.forEach(dr=>{G.board=tiltBoard(G.board,dr)});recDiffMoves(before,G.board);shakeLater(6);if(!REC)S('bomb');
       return(sel&&sel.boost?'⚡':'')+'TILT '+dirs.map(dr=>({U:'↑',D:'↓',L:'←',R:'→'})[dr]).join('')}},
   turn:{name:'Turn',short:lv=>'Stuck → rotate '+(lv>1?lv:'1')+' (ink +1/save)',lvText:lv=>'rotate up to '+lv,type:'act',on:'stuck',once:true,cost:{Y:1},
     desc:'WHEN no piece fits → rotate a piece so it fits (+1 piece per level). Saves cost charges of any ink: 1, then 2, then 3… per run (arming covers 1). Boost: best-rotate every piece.',
     pick(){const x=[];const st=!G.tray.every(p=>p.used||fitsAnywhere(p.cells));x.paid=st&&G.armed.has('turn');x.boost=st?takeBoost('turn'):false;return x},
-    run(d,sel){const sc=saveCost(sel&&sel.paid);if(KEYS.reduce((a,k)=>a+G.charges[k],0)<sc){payAny('Turn',sc);return null}const n=turnPieces(sel&&sel.boost,perkLv('turn'));if(n){payAny('Turn',sc);G.saves=(G.saves||0)+1}if(!n)return null;S('pick');return(sel&&sel.boost?'⚡':'')+'TURN'+(n>1?' ×'+n:'')}},
+    run(d,sel){const sc=saveCost(sel&&sel.paid);if(KEYS.reduce((a,k)=>a+G.charges[k],0)<sc){payAny('Turn',sc);return null}const n=turnPieces(sel&&sel.boost,perkLv('turn'));if(n){payAny('Turn',sc);G.saves=(G.saves||0)+1}if(!n)return null;if(!REC)S('pick');return(sel&&sel.boost?'⚡':'')+'TURN'+(n>1?' ×'+n:'')}},
   wetink:{name:'Wet Ink',short:lv=>'Chain ends → stack '+wetPct(lv)+'%',lvText:lv=>'stack '+wetPct(lv)+'% of each chain\'s gain, max +'+wetCap(lv),type:'pass',maxLv:3,
     desc:'WHEN a chain ends → part of the multiplier its perks added stays wet and stacks onto the next chain\'s start. Keeps building chain after chain; dries only when your streak breaks (a whole tray with no clear).'},
   thrift:{name:'Thrift',short:'1st fire is boosted',type:'pass',desc:'The first armable perk to fire each chain is boosted for free.'},
@@ -449,10 +449,10 @@ function planTilt(k){let b=G.board;const out=[];
     if(!best)break;out.push(best);b=tiltBoard(b,best)}
   return out}
 function turnPieces(all,lim){let n=0;lim=lim||1;
-  G.tray.forEach(p=>{if(p.used)return;if(!all&&(n>=lim||fitsAnywhere(p.cells)))return;
+  G.tray.forEach((p,pi)=>{if(p.used)return;if(!all&&(n>=lim||fitsAnywhere(p.cells)))return;
     let best=null,bs=-1,cells=p.cells;
     for(let k=0;k<4;k++){if(k>0)cells=rotCells(cells);let fc=0;for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(canPlace(cells,r,c))fc++;if(fc>bs){bs=fc;best={cells,k}}}
-    if(best&&best.k>0&&bs>0){p.cells=best.cells;n++}});
+    if(best&&best.k>0&&bs>0){p.cells=best.cells;n++;if(REC)REC.push({verb:'rotate',i:pi,q:best.k})}});
   return n}
 // arming: pay a perk's cost between moves; its next fire is boosted
 function wetPct(lv){return Math.round(100*(0.2+0.1*lv+((G&&G.mods&&G.mods.wetBonus)||0)))}
@@ -496,7 +496,7 @@ function genTray(){
   G.tray=best;G.trayClear=false;
 }
 function makeSmall(){const sm=SHAPES.filter(x=>x.length<=3);return{cells:sm[(Math.random()*sm.length)|0],k:KEYS[(Math.random()*3)|0],used:false,s:seed()}}
-function rerollTray(small){const n=G.tray.filter(p=>!p.used).length||(has('blind')?2:3);let t;for(let a=0;a<30;a++){t=[...Array(n)].map(()=>small?makeSmall():makePiece());if(t.some(p=>fitsAnywhere(p.cells)))break}G.tray=t;R.pop(W/2,trayY+trayH*0.4,'REPRINT','B',22)}
+function rerollTray(small){const n=G.tray.filter(p=>!p.used).length||(has('blind')?2:3);let t;for(let a=0;a<30;a++){t=[...Array(n)].map(()=>small?makeSmall():makePiece());if(t.some(p=>fitsAnywhere(p.cells)))break}G.tray=t;if(REC)REC.push({verb:'swap'});R.pop(W/2,trayY+trayH*0.4,'REPRINT','B',22)}
 
 /* ---------- charges / exp ---------- */
 // pay 1 charge from the fullest ink; false (and a NO INK pop) when every meter is empty
@@ -528,37 +528,101 @@ function emit(ev,d){
   }
 }
 
-/* ---------- step queue: one step at a time = telegraph → resolve → pause ---------- */
-const TELE_MS=320,GAP_MS=560;
+/* ---------- step queue: one step at a time = anticipation → action → settle ---------- */
+/* Each step = 3 beats. Timing only drives visuals: all board/score logic runs at fixed points of the sequence, never reads a clock.
+   1 ANTICIPATION  card lifts, aim arc card→target, target cells pulse
+   2 ACTION        s.run() mutates state; blocks are drawn tweening (REC list → ANIM) with a verb effect; highlight held
+   3 SETTLE        squash/bounce, step token + ×N stamp flight + pot punch, then the next step
+   Step k of a chain scales every beat by max(floor, decay^(k-1)); tapping the board fast-forwards the rest of the chain. */
+const BEAT={antic:340,act:380,settle:300,decay:.85,floor:.45,ff:3,rmAntic:140,rmGap:200};
+const reduced=()=>{try{return matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){return false}};
+const stepSpeed=k=>Math.max(BEAT.floor,Math.pow(BEAT.decay,Math.max(0,k-1)));
+const nowMs=()=>performance.now();
+let ANIM=null,REC=null,beatT=null;
+// --- recorders: perk helpers call these while REC is an array (only during an animated step.run) ---
+function recMove(v,fr,fc,tr,tc,verb,bn){if(!REC)return;const e=REC.find(x=>x.v===v);if(e){e.tr=tr;e.tc=tc;return}REC.push({verb,v,fr,fc,tr,tc,ev:1,bn:bn||0})}
+function recDiffMoves(before,after){if(!REC)return;const pos=new Map();
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){const v=after[r][c];if(v&&v.k!=='L')pos.set(v,[r,c])}
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){const v=before[r][c];if(!v||v.k==='L')continue;const p=pos.get(v);if(p&&(p[0]!==r||p[1]!==c))REC.push({verb:'move',v,fr:r,fc:c,tr:p[0],tc:p[1],ev:1,bn:0})}}
+function shakeLater(a){if(REC&&REC.length)REC[0].shake=Math.max(REC[0].shake||0,a);else R.shake(a)}
+const VERB_SFX={destroy:'crack',drop:'thud',move:'whoosh',reink:'splash',rotate:'click',swap:'click'};
+const VERB_PRI=['destroy','drop','move','reink','rotate','swap'];
+// one timer for the current beat so a fast-forward tap can shorten whatever is pending
+function after(ms,fn){const b={end:nowMs()+ms,fn};b.id=setTimeout(()=>{if(beatT===b)beatT=null;fn()},ms);beatT=b}
+function fastForward(){
+  if(!G||!G.pumping||!G.win||G.ff>1)return;G.ff=BEAT.ff;const n=nowMs();
+  if(beatT){const b=beatT;clearTimeout(b.id);b.end=n+Math.max(0,b.end-n)/BEAT.ff;b.id=setTimeout(()=>{if(beatT===b)beatT=null;b.fn()},Math.max(0,b.end-n))}
+  if(ANIM){if(ANIM.phase==='action'){const el=n-ANIM.t0;ANIM.dur=el+Math.max(0,ANIM.dur-el)/BEAT.ff}else{const el=n-ANIM.sT0;ANIM.sDur=el+Math.max(0,ANIM.sDur-el)/BEAT.ff}}
+  if(G.aimFx){const a=G.aimFx,el=n-a.t0;a.dur=el+Math.max(0,a.dur-el)/BEAT.ff}
+  R.pop(W/2,boardY+bs*0.5,'FAST ×'+BEAT.ff,'Y',20);S('ui');
+}
+function startAim(s,cells,sc){
+  G.aimFx=null;if(!s.id)return;
+  const card=document.querySelector('.card[data-id="'+s.id+'"]');if(!card)return;
+  const cr=card.getBoundingClientRect(),vr=cv.getBoundingClientRect();let tx=null,ty=null;
+  if(cells&&cells.length){tx=0;ty=0;cells.forEach(([r,c])=>{tx+=cx(c);ty+=cy(r)});tx/=cells.length;ty/=cells.length}
+  else if(PERKS[s.id].on==='stuck'){tx=W/2;ty=trayY+trayH*.45}
+  else if(s.id==='tilt'){tx=boardX+bs/2;ty=boardY+bs/2}
+  if(tx==null)return;
+  G.aimFx={x0:cr.left+cr.width/2-vr.left,y0:cr.top-vr.top,x1:tx,y1:ty,t0:nowMs(),dur:BEAT.antic*sc*.8,k:s.k};
+}
 function enqueue(s){G.q.push(s);if(!G.pumping)pump()}
 function pump(){
   if(!G)return;
   if(G.win&&has('fuse')&&G.win.stepNo>=3&&G.q.length){G.q.length=0;addToken('☠','SHORT FUSE','OUT','Y')}
-  if(!G.q.length){G.pumping=false;G.flashCells=null;G.firing=null;const cb=G.afterQ;G.afterQ=null;ui();if(cb)cb();return}
+  if(!G.q.length){G.pumping=false;G.flashCells=null;G.firing=null;G.hold=false;G.trayShow=false;G.aimFx=null;ANIM=null;const cb=G.afterQ;G.afterQ=null;ui();if(cb)cb();return}
   G.pumping=true;const s=G.q.shift();const run=G;G.firing=s.id||null;
+  const rm=reduced();
+  const beatNo=G.win?(G.win.beats=(G.win.beats||0)+1):1,f=stepSpeed(beatNo);
+  const sc=()=>f*(G.ff>1?1/G.ff:1);          // duration scale, re-read at each beat so a fast-forward applies at once
   const cells=s.preview?s.preview():null;
   G.flashCells=cells&&cells.length?new Set(cells.map(([r,c])=>r*N+c)):null;
-  G.flashKind=s.fx||(s.id&&PERKS[s.id].fx)||'react';
+  G.flashKind=s.fx||(s.id&&PERKS[s.id].fx)||'react';G.hold=false;
+  G.trayShow=!rm&&!!(s.id&&PERKS[s.id].on==='stuck');
   ui();if(s.id)flashCard(s.id);
-  setTimeout(()=>{
+  if(G.trayShow)$('ribbon').style.visibility='hidden';   // ribbon sits over the tray; hide it so the tray beat is visible
+  if(!rm)startAim(s,cells,sc());
+  const next=()=>{if(G!==run)return;ANIM=null;G.trayShow=false;pump()};
+  after(rm?BEAT.rmAntic:BEAT.antic*sc(),()=>{
     if(G!==run)return;
-    const tag=s.run();
-    G.flashCells=null;
-    const k=s.kOut?s.kOut():s.k;
-    // a perk that ends up doing nothing (tag null) leaves no token, no sound, no mult
-    if(G.win&&(tag||!s.id)){G.win.stepNo++;G.win.log.push(s.name);addToken(G.win.stepNo,s.name,tag,k);if(s.fx!=='clear')S('step',{n:G.win.stepNo})}
-    ui();
-    if(s.id&&tag)flyTag(s.id,tag,k);
-    // every perk step that does something → chain mult +1 (×1 → ×2 → ×3 …)
-    // Spark adds mult only on its first fire each chain; a boosted (⚡) fire adds +2
-    if(G.win&&s.id&&tag&&!(s.id==='spark'&&G.win.sparked)){G.win.mult+=(String(tag)[0]==='⚡'?2:1);multStamp(s.id)}
-    if(G.win&&s.id==='spark'&&tag)G.win.sparked=true;
-    // board fully emptied during a chain → CLEAN SHEET: chain mult ×2 (once per chain)
-    if(G.win&&!G.win.clean&&boardEmpty()){G.win.clean=true;G.win.mult*=2;cleanSheet()}
-    // a perk effect completed lines → that line clear plays next, before other queued steps
-    const fl=fullLines();if(fl.rows.length+fl.cols.length)G.q.unshift(clearStep());
-    setTimeout(()=>{if(G===run)pump()},GAP_MS);
-  },TELE_MS);
+    let tag,items=null;
+    REC=rm?null:[];
+    try{tag=s.run()}finally{items=REC;REC=null}
+    const verbs=items?items.map(x=>x.verb):[];
+    const animated=!rm&&verbs.length>0;
+    const logic=()=>{
+      G.flashCells=null;G.hold=false;G.aimFx=null;
+      const k=s.kOut?s.kOut():s.k;
+      // a perk that ends up doing nothing (tag null) leaves no token, no sound, no mult
+      if(G.win&&(tag||!s.id)){G.win.stepNo++;G.win.log.push(s.name);addToken(G.win.stepNo,s.name,tag,k);if(s.fx!=='clear')S('step',{n:G.win.stepNo})}
+      ui();
+      if(s.id&&tag)flyTag(s.id,tag,k);
+      // every perk step that does something → chain mult +1 (×1 → ×2 → ×3 …)
+      // Spark adds mult only on its first fire each chain; a boosted (⚡) fire adds +2
+      if(G.win&&s.id&&tag&&!(s.id==='spark'&&G.win.sparked)){G.win.mult+=(String(tag)[0]==='⚡'?2:1);multStamp(s.id,rm?undefined:Math.max(140,BEAT.settle*sc()*.9))}
+      if(G.win&&s.id==='spark'&&tag)G.win.sparked=true;
+      // board fully emptied during a chain → CLEAN SHEET: chain mult ×2 (once per chain)
+      if(G.win&&!G.win.clean&&boardEmpty()){G.win.clean=true;G.win.mult*=2;cleanSheet()}
+      // a perk effect completed lines → that line clear plays next, before other queued steps
+      const fl=fullLines();if(fl.rows.length+fl.cols.length)G.q.unshift(clearStep());
+    };
+    if(!animated){
+      // reduced motion or no visible board change: logic right away, short pause
+      logic();after(rm?BEAT.rmGap:BEAT.settle*sc(),next);return;
+    }
+    // ---- action beat ----
+    G.hold=true;
+    ANIM={t0:nowMs(),dur:BEAT.act*sc(),phase:'action',sT0:0,sDur:0,items,cells:new Map(),tray:items.some(x=>x.verb==='rotate'||x.verb==='swap')};
+    items.forEach((it,i)=>{if(it.v)ANIM.cells.set(it.v,it);if(it.verb==='destroy'||it.verb==='reink')it.d=Math.min(.3,i*.03)});
+    if(s.fx!=='clear'){const vb=VERB_PRI.find(x=>verbs.includes(x));if(vb)S(VERB_SFX[vb],{sp:sc()})}
+    after(BEAT.act*sc(),()=>{
+      if(G!==run)return;
+      // ---- settle beat ----
+      ANIM.phase='settle';ANIM.sT0=nowMs();ANIM.sDur=BEAT.settle*sc();
+      logic();
+      after(BEAT.settle*sc(),next);
+    });
+  });
 }
 function whenIdle(cb){if(!G.pumping&&!G.q.length){cb();return}const prev=G.afterQ;G.afterQ=prev?()=>{prev();cb()}:cb}
 function lineCells(){const{rows,cols}=fullLines();const l=[];rows.forEach(r=>{for(let c=0;c<N;c++)l.push([r,c])});cols.forEach(c=>{for(let r=0;r<N;r++)l.push([r,c])});return l}
@@ -579,16 +643,16 @@ function renderPot(punch){if(!G||!G.win)return;const pl=$('potline');
   if(punch||G.win.shownX==null){const m=G.win.mult;G.win.shownX=m;x.textContent=fmtX(m);x.style.setProperty('--tc',tierC(m))}
   if(punch){x.classList.remove('punch');void x.offsetWidth;x.classList.add('punch')}}
 // ×N stamp flies from the perk card into the pot multiplier, then punches it
-function multStamp(id){
+function multStamp(id,ms){ms=ms||430;
   const m=G.win.mult,run=G;const fr=$('frame'),card=document.querySelector('.card[data-id="'+id+'"]'),pl=$('potline');
   const land=()=>{if(G!==run||!G.win)return;renderPot(true);R.shake(2+Math.min(m,10));S('mult',{n:m})};
   if(!card||!pl||matchMedia('(prefers-reduced-motion:reduce)').matches){land();return}
   const b=fr.getBoundingClientRect(),a=card.getBoundingClientRect(),t=pl.getBoundingClientRect();
   const f=document.createElement('div');f.className='xfly';f.textContent=fmtX(m);f.style.setProperty('--tc',tierC(m));
   f.style.fontSize=Math.min(13,6+m*.8)+'cqw';f.style.left=(a.left-b.left+a.width/2)+'px';f.style.top=(a.top-b.top)+'px';
-  f.style.transform='translate(-50%,-50%) scale(1.25) rotate(-8deg)';fr.appendChild(f);
+  f.style.transitionDuration=(ms/1000)+'s';f.style.transform='translate(-50%,-50%) scale(1.25) rotate(-8deg)';fr.appendChild(f);
   requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.left=(t.right-b.left)+'px';f.style.top=(t.top-b.top+t.height/2)+'px';f.style.transform='translate(-50%,-50%) scale(.55) rotate(-3deg)'}));
-  setTimeout(()=>{f.remove();land()},430);
+  setTimeout(()=>{f.remove();land()},ms);
 }
 function cleanSheet(){
   const fr=$('stage');const o=document.createElement('div');o.className='cleanov';
@@ -624,9 +688,10 @@ function resolveClears(){
   lines.forEach(l=>{const ks=lineKeys(l);if(ks.length&&ks[0]!=='X'&&ks.every(k=>k===ks[0]))pure.push(ks[0]);
     const cnt={};ks.forEach(k=>{if(k!=='X')cnt[k]=(cnt[k]||0)+1});const top=KEYS.slice().sort((a,b)=>(cnt[b]||0)-(cnt[a]||0))[0];if((cnt[top]||0)>=(has('smudge')?4:5))tint.push(top);l.forEach(([r,c])=>set.set(r*N+c,[r,c]))});
   let count=0;
-  let greyN=0;set.forEach(([r,c])=>{const v=G.board[r][c];if(!v||v.k==='L')return;count++;if(v.k==='X')greyN++;
+  let greyN=0;const dl=[];set.forEach(([r,c])=>{const v=G.board[r][c];if(!v||v.k==='L')return;count++;if(v.k==='X')greyN++;
     if(G.prog[v.k]!=null){G.prog[v.k]++;if(G.prog[v.k]>=6){G.prog[v.k]-=6;addCharge(v.k,1)}}
-    R.burst(cx(c),cy(r),v.k,4);G.board[r][c]=null});
+    if(REC)dl.push({verb:'destroy',v,r,c,k:v.k,ev:.42,bn:4});else R.burst(cx(c),cy(r),v.k,4);G.board[r][c]=null});
+  if(REC&&dl.length){dl[0].shake=3+n*2;REC.push(...dl)}
   G.lines+=n;gainExp(count);
   const mult=n+pure.length;
   const thruBlot=has('blot')&&lines.some(l=>l.some(([r,c])=>G.board[r][c]&&G.board[r][c].blot));
@@ -638,18 +703,18 @@ function resolveClears(){
   const midR=rows.length?rows[0]:3.5,midC=cols.length?cols[0]:3.5;
   const words=['','NICE','GREAT','SUPERB','PERFECT','LEGEND'];
   R.pop(cx(midC),cy(midR),(pure.length?'PURE! ':'')+(words[Math.min(5,n)]||'')+' +'+pts,pure[0]||'R',n>1?30:24);
-  R.shake(3+n*2);S('clear',{lines:n,pure:pure.length>0});
+  if(!REC)R.shake(3+n*2);S('clear',{lines:n,pure:pure.length>0});
   G.lastClear={n,pure};
   emit('clear',{lines:n,pure,tint,rows,cols,inWindow:true});
   return pts;
 }
 function destroyCells(list){
-  const keys=[];let count=0;
-  list.forEach(([r,c])=>{const v=cellAt(r,c);if(!v||v.k==='L')return;keys.push(v.k);count++;R.burst(cx(c),cy(r),v.k,6);G.board[r][c]=null});
+  const keys=[];let count=0;const dl=[];
+  list.forEach(([r,c])=>{const v=cellAt(r,c);if(!v||v.k==='L')return;keys.push(v.k);count++;if(REC)dl.push({verb:'destroy',v,r,c,k:v.k,ev:.42,bn:6});else R.burst(cx(c),cy(r),v.k,6);G.board[r][c]=null});
   if(!count)return;
   if(G.win)G.win.pot+=5*count;
   if(has('spill')&&G.win){const nx=keys.filter(k=>k==='X').length;if(nx){G.win.mult+=nx;renderPot(true);R.pop(W/2,boardY+bs*0.36,'SPILL chain +'+nx,'Y',22)}}
-  R.shake(2+count);S(count>=4?'bomb':'destroy');
+  if(REC){dl[0].shake=2+count;REC.push(...dl);if(count>=4)S('bomb')}else{R.shake(2+count);S(count>=4?'bomb':'destroy')}
   emit('destroy',{keys,count});
 }
 
@@ -698,7 +763,7 @@ function openWindow(k,last){
   if(has('overclock'))G.charges[k]=Math.max(0,G.charges[k]-1);
   const base=has('overclock')?2:1,wet=G.wet||0;G.wet=0;
   G.win={key:k,pot:0,mult:base+wet,base,wetIn:wet,used:new Set(),log:[],steps:0,stepNo:0,disc:has('thrift')?1:0,last};
-  timeScale=.25;resetRibbon(true);S('chain');
+  timeScale=.25;G.ff=1;resetRibbon(true);S('chain');
   if(wet>0){R.pop(W/2,boardY+bs*0.3,'WET INK +'+wet,'B',26);setTimeout(()=>renderPot(true),60)}
   if(last)R.pop(W/2,boardY+bs*0.45,'RESCUE','R',34);
   ui();
@@ -739,7 +804,7 @@ function closeWindow(){
     if(G.wet>0)setTimeout(()=>{if(G&&G.wet>0)R.pop(W/2,boardY+bs*0.64,'WET +'+G.wet+' → NEXT CHAIN','B',20)},350)}
   const chainLen=w.log.length;G.longestChain=Math.max(G.longestChain,chainLen);
   if(total>0){R.pop(W/2,boardY+bs*0.5,(w.mult>1?'CHAIN '+fmtX(w.mult)+' ':'CHAIN ')+(sx>1?'STREAK '+fmtX(sx)+' ':'')+'+'+total,w.mult>=4?'R':'B',Math.min(52,32+w.mult*2));S('payout',{big:total>=300||w.mult>=4})}
-  G.win=null;G.picking=null;timeScale=1;resetRibbon(false);aim=null;
+  G.win=null;G.picking=null;G.ff=1;timeScale=1;resetRibbon(false);aim=null;
   if(w.last){
     if(G.tray.every(p=>p.used))genTray();
     if(G.tray.some(p=>!p.used&&fitsAnywhere(p.cells))){G.lastChanceUsed=false;if(G.pendingLv>0)showLevelUp();ui();return}
@@ -951,6 +1016,7 @@ function snap(o){return{r:Math.round((o.y-boardY)/cs),c:Math.round((o.x-boardX)/
 let aim=null,aiming=false,aimFrom=null,dirStart=null,dirNow=null;
 function aimAt(e,pos){const lift=e.pointerType==='touch'?cs*0.9:0;const r=Math.floor((pos.y-lift-boardY)/cs),c=Math.floor((pos.x-boardX)/cs);aim=(r>=0&&c>=0&&r<N&&c<N)?{r,c}:null}
 cv.addEventListener('pointerdown',e=>{
+  if(G&&G.pumping&&G.win&&!G.over){fastForward();return}
   if(!G||G.over||G.pumping)return;const pos=evPos(e);const{x,y}=pos;
   if(G.win){
     if(G.picking){const pk=PERKS[G.picking];
@@ -984,6 +1050,87 @@ function previewClears(p,r,c){
   return s;
 }
 
+/* ---------- chain-step animation drawing (visual only; the board state is already final) ---------- */
+const clamp01=x=>x<0?0:x>1?1:x;
+const easeIO=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+const easeOutBack=p=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(p-1,3)+c1*Math.pow(p-1,2)};
+function animU(t){const A=ANIM,settle=A.phase==='settle';return{settle,u:settle?1:clamp01((t-A.t0)/A.dur),su:settle?clamp01((t-A.sT0)/A.sDur):0}}
+function fireItem(it){if(it.bn)R.burst(cx(it.verb==='move'||it.verb==='drop'?it.tc:it.c),cy(it.verb==='move'||it.verb==='drop'?it.tr:it.r),it.verb==='destroy'?it.k:(it.v?it.v.k:'X'),it.bn);if(it.shake)R.shake(it.shake)}
+function drawAnim(t){
+  const A=ANIM;if(!A||!G)return;
+  const{settle,u:u0,su}=animU(t);
+  A.items.forEach(it=>{
+    if(it.verb==='rotate'||it.verb==='swap'){if(!it.fired){it.fired=true}return}
+    const d=it.d||0,u=clamp01((u0-d)/(1-d));
+    if(!it.fired&&u>=(it.ev||1)){it.fired=true;fireItem(it)}
+    if(it.verb==='move'||it.verb==='drop'){
+      const drop=it.verb==='drop',e=drop?u*u:easeIO(u);
+      const px=p=>boardX+(it.fc+(it.tc-it.fc)*p)*cs,py=p=>boardY+(it.fr+(it.tr-it.fr)*p)*cs;
+      const x=px(e),y=py(e),col=colOf(it.v.k);
+      if(u<1){
+        // ink-smear tail behind the block
+        const e0=Math.max(0,e-.45);ctx.save();ctx.lineCap='round';ctx.strokeStyle=col;ctx.globalAlpha=.3;ctx.lineWidth=cs*.5;
+        ctx.beginPath();ctx.moveTo(px(e0)+cs/2,py(e0)+cs/2);ctx.lineTo(x+cs/2,y+cs/2);ctx.stroke();
+        ctx.globalAlpha=.16;ctx.lineWidth=cs*.8;ctx.beginPath();ctx.moveTo(px(Math.max(0,e-.7))+cs/2,py(Math.max(0,e-.7))+cs/2);ctx.lineTo(x+cs/2,y+cs/2);ctx.stroke();
+        if(drop){ctx.globalAlpha=.4;ctx.lineWidth=Math.max(1.5,cs*.04);[.25,.5,.75].forEach(f=>{ctx.beginPath();ctx.moveTo(x+cs*f,y-cs*(.25+.5*u));ctx.lineTo(x+cs*f,y+cs*.1);ctx.stroke()})}
+        ctx.restore();
+      }
+      // landing squash (bigger for a drop), anchored on the bottom edge
+      const sq=settle?Math.sin(su*Math.PI*3)*(1-su)*(drop?.3:.12):0;
+      ctx.save();const ax=x+cs/2,ay=drop?y+cs:y+cs/2;ctx.translate(ax,ay);ctx.scale(1+sq*.8,1-sq);ctx.translate(-ax,-ay);
+      R.cell(ctx,x,y,cs,it.v.k,{t,seed:it.v.s,highlight:!settle,selected:!settle});ctx.restore();
+    }else if(it.verb==='destroy'){
+      const x=boardX+it.c*cs,y=boardY+it.r*cs,col=colOf(it.k);
+      if(u<.42){
+        const p=u/.42,jx=Math.sin(t*.09+it.r)*cs*.04*p,jy=Math.cos(t*.11+it.c)*cs*.04*p;
+        R.cell(ctx,x+jx,y+jy,cs,it.k,{t,seed:it.v.s,highlight:true,selected:true});
+        ctx.save();ctx.strokeStyle=PAL.dark;ctx.lineWidth=Math.max(1.5,cs*.06);ctx.lineCap='round';ctx.beginPath();
+        [[.5,.5,.18,.12],[.5,.5,.88,.28],[.5,.5,.72,.92],[.5,.5,.08,.78]].forEach(([a,b,c2,d2])=>{ctx.moveTo(x+jx+cs*a,y+jy+cs*b);ctx.lineTo(x+jx+cs*(a+(c2-a)*p),y+jy+cs*(b+(d2-b)*p))});ctx.stroke();
+        if(p>.85){ctx.globalAlpha=(p-.85)/.15*.5;ctx.fillStyle='#fff';ctx.fillRect(x+2,y+2,cs-4,cs-4)}ctx.restore();
+      }else{
+        // ink splatter: blobs thrown outward, then a fading stain
+        const q=(u-.42)/.58;ctx.save();ctx.fillStyle=col;
+        for(let j=0;j<7;j++){const a=j*0.898+it.r*1.3+it.c*.7,rad=cs*(.12+.62*q),sz=cs*.15*(1-q)+1;ctx.globalAlpha=.85*(1-q);ctx.beginPath();ctx.arc(x+cs/2+Math.cos(a)*rad,y+cs/2+Math.sin(a)*rad,sz,0,Math.PI*2);ctx.fill()}
+        ctx.globalAlpha=.3*(1-q)*(settle?1-su:1);ctx.beginPath();ctx.arc(x+cs/2,y+cs/2,cs*.32,0,Math.PI*2);ctx.fill();ctx.restore();
+      }
+    }else if(it.verb==='reink'){
+      const x=boardX+it.c*cs,y=boardY+it.r*cs,q=easeIO(u),pulse=settle?1+Math.sin(su*Math.PI)*.07:1;
+      ctx.save();ctx.translate(x+cs/2,y+cs/2);ctx.scale(pulse,pulse);ctx.translate(-x-cs/2,-y-cs/2);
+      R.cell(ctx,x,y,cs,it.from,{t,seed:it.v.s,highlight:!settle,selected:!settle});
+      if(u>0){ctx.save();ctx.beginPath();ctx.rect(x,y,cs,cs);ctx.clip();ctx.beginPath();
+        for(let j=0;j<=16;j++){const a=j/16*Math.PI*2,rr=cs*.9*q*(1+.12*Math.sin(a*5+it.r+it.c));j?ctx.lineTo(x+cs/2+Math.cos(a)*rr,y+cs/2+Math.sin(a)*rr):ctx.moveTo(x+cs/2+Math.cos(a)*rr,y+cs/2+Math.sin(a)*rr)}
+        ctx.closePath();ctx.clip();R.cell(ctx,x,y,cs,it.to,{t,seed:it.v.s,highlight:!settle,selected:!settle});ctx.restore()}
+      ctx.restore();
+    }
+  });
+}
+// tray-piece transform for Turn (spin) / Reprint (spin-in) steps
+function trayTf(i,t){
+  const A=ANIM;if(!A||!A.tray)return null;const{settle,u,su}=animU(t);
+  for(const it of A.items){
+    if(it.verb==='rotate'&&it.i===i){const e=easeIO(u);return{rot:-it.q*Math.PI/2*(1-e),sc:1+(settle?Math.sin(su*Math.PI*2)*(1-su)*.1:Math.sin(u*Math.PI)*.12)}}
+    if(it.verb==='swap'){return{rot:(1-easeOutBack(u))*Math.PI/2,sc:Math.max(.01,easeOutBack(u))}}
+  }
+  return null;
+}
+// pulsing outline on every targeted cell: held through anticipation and the action beat
+function drawPulse(t){
+  if(!G||!G.win||!G.flashCells)return;
+  const k=.5+.5*Math.sin(t/85);ctx.save();ctx.strokeStyle=PAL.dark;ctx.lineWidth=Math.max(2,cs*.07);ctx.globalAlpha=.35+.55*k;
+  G.flashCells.forEach(idx=>{const r=(idx/N)|0,c=idx%N;const m=cs*.05+k*cs*.03;ctx.strokeRect(boardX+c*cs+m,boardY+r*cs+m,cs-2*m,cs-2*m)});ctx.restore();
+}
+// dashed arc from the firing card to the target
+function drawAim(t){
+  const a=G&&G.aimFx;if(!a)return;
+  const p=clamp01((t-a.t0)/a.dur),fade=ANIM?1-clamp01(animU(t).u)*.7:1;
+  const mx=(a.x0+a.x1)/2,my=(a.y0+a.y1)/2,dx=a.x1-a.x0,dy=a.y1-a.y0,len=Math.hypot(dx,dy)||1;
+  const qx=mx-dy/len*len*.22,qy=my+dx/len*len*.22;
+  const pt=s=>[(1-s)*(1-s)*a.x0+2*(1-s)*s*qx+s*s*a.x1,(1-s)*(1-s)*a.y0+2*(1-s)*s*qy+s*s*a.y1];
+  ctx.save();ctx.globalAlpha=.9*fade;ctx.strokeStyle=colOf(a.k);ctx.lineWidth=Math.max(3,cs*.09);ctx.lineCap='round';ctx.setLineDash([cs*.28,cs*.2]);ctx.lineDashOffset=-t*.04;
+  ctx.beginPath();for(let j=0;j<=24;j++){const[x,y]=pt(j/24*p);j?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.setLineDash([]);
+  const[hx,hy]=pt(p);ctx.fillStyle=PAL.dark;ctx.beginPath();ctx.arc(hx,hy,cs*.13,0,Math.PI*2);ctx.fill();ctx.fillStyle=colOf(a.k);ctx.beginPath();ctx.arc(hx,hy,cs*.08,0,Math.PI*2);ctx.fill();ctx.restore();
+}
+
 let last=performance.now();
 function frame(t){
   const dt=Math.min(50,t-last);last=t;
@@ -1003,9 +1150,10 @@ function frame(t){
       if(!v){R.empty(ctx,x,y,cs,{t});
         if(inPatch(r,c)){ctx.fillStyle='rgba(47,98,200,.30)';ctx.fillRect(x+1,y+1,cs-2,cs-2);ctx.fillStyle='rgba(47,98,200,.55)';ctx.fillRect(x+cs*.3,y+cs*.42,cs*.4,cs*.16)}
         if(inA&&pk.fx==='fill')R.cell(ctx,x,y,cs,G.win.key,{t,seed:idx,ghost:true,selected:aimOk});
-        if(G.flashCells&&G.flashCells.has(idx)&&G.win)R.cell(ctx,x,y,cs,G.win.key,{t,seed:idx,ghost:true,selected:true});
+        if(G.flashCells&&G.flashCells.has(idx)&&G.win&&!G.hold)R.cell(ctx,x,y,cs,G.win.key,{t,seed:idx,ghost:true,selected:true});
         continue}
       if(v.k==='L'){ctx.fillStyle=PAL.dark;ctx.globalAlpha=.85;ctx.fillRect(x+2,y+2,cs-4,cs-4);ctx.globalAlpha=1;continue}
+      if(ANIM&&ANIM.cells.has(v))continue;
       const inPv=!!(pv&&pv.has(idx));
       const fl=!!(G.flashCells&&G.flashCells.has(idx));
       // clear preview keeps each block's real ink (pure-line + meter reads stay honest); only highlights it
@@ -1016,6 +1164,7 @@ function frame(t){
         else if(pk.fx==='recolor'&&v.k!==G.win.key)R.cell(ctx,x,y,cs,G.win.key,{t,seed:idx+3,ghost:true});
       }
     }
+    drawAnim(t);drawPulse(t);drawAim(t);
     if(ghostP){ghostP.cells.forEach(([a,b])=>{const r=hover.r+a,c=hover.c+b;R.cell(ctx,boardX+c*cs,boardY+r*cs,cs,has('inkblind')?'X':ghostP.k,{t,seed:ghostP.s+a*7+b,ghost:true,highlight:pv.has(r*N+c)})})}
     if(pk){ // aim preview: affected area, X marks on blocks to destroy, reticle
       ctx.strokeStyle=PAL.R;ctx.lineWidth=2;ctx.strokeRect(boardX-3,boardY-3,bs+6,bs+6);
@@ -1035,11 +1184,13 @@ function frame(t){
     // tray
     const n=G.tray.length;
     G.tray.forEach((p,i)=>{
-      if(p.used||(G.win&&G.picking!=='turn')||(drag&&drag.i===i))return;const s=traySlot(i,n);const tc=trayCell(p,n);const d=dims(p.cells);
+      if(p.used||(G.win&&G.picking!=='turn'&&!G.trayShow)||(drag&&drag.i===i))return;const s=traySlot(i,n);const tc=trayCell(p,n);const d=dims(p.cells);
       const fits=fitsAnywhere(p.cells);const ox=s.cx-d.w*tc/2,oy=s.cy-d.h*tc/2;
-      p.cells.forEach(([a,b])=>R.cell(ctx,ox+b*tc,oy+a*tc,tc,has('inkblind')?'X':p.k,{t,seed:p.s+a*7+b,alpha:fits?1:.3}));
+      const tf=trayTf(i,t);if(tf){ctx.save();ctx.translate(s.cx,s.cy);ctx.rotate(tf.rot);ctx.scale(tf.sc,tf.sc);ctx.translate(-s.cx,-s.cy)}
+      p.cells.forEach(([a,b])=>R.cell(ctx,ox+b*tc,oy+a*tc,tc,has('inkblind')?'X':p.k,{t,seed:p.s+a*7+b,alpha:(fits||G.win)?1:.3}));
+      if(tf)ctx.restore();
     });
-    if(G.win&&G.picking!=='turn'){ctx.fillStyle='rgba(38,34,47,.92)';ctx.fillRect(0,trayY-cs*0.15,W,H)}
+    if(G.win&&G.picking!=='turn'&&!G.trayShow){ctx.fillStyle='rgba(38,34,47,.92)';ctx.fillRect(0,trayY-cs*0.15,W,H)}
     if(drag){const p=G.tray[drag.i];const o=dragOrigin(drag.x,drag.y,p);
       p.cells.forEach(([a,b])=>R.cell(ctx,o.x+b*cs,o.y+a*cs,cs,has('inkblind')?'X':p.k,{t,seed:p.s+a*7+b,alpha:.95}))}
   }
